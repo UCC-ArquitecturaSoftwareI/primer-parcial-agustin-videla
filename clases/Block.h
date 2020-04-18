@@ -19,6 +19,7 @@ public:
     virtual int getX() { return (int)coordinates.x; }
     virtual int getY() { return (int)coordinates.y; }
     virtual Vector2 getSize() { return size; }
+    virtual void draw() { }
 };
 
 

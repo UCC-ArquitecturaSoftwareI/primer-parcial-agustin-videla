@@ -11,7 +11,7 @@ const int screenHeight = 450;
 // Variables Globales
 Music music;
 BlockFactory* factory;
-std::vector<Block_Dirt> blocks;
+std::vector<Block*> blocks;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -59,7 +59,8 @@ static void UpdateDrawFrame(void) {
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        blocks.push_back(factory->createBlock(1, GetMousePosition()));
+
+        blocks.push_back(factory->create("iron", 1, GetMousePosition()));
     }
 
 
@@ -70,11 +71,11 @@ static void UpdateDrawFrame(void) {
 
     // Dibujo todos los elementos del juego.
     for(auto i : blocks) {
-        i.draw();
+        i->draw();
     }
 
 
-    DrawText("Inicio", 20, 20, 40, LIGHTGRAY);
+    DrawText("maincraa", 20, 20, 40, LIGHTGRAY);
 
     // Finalizo el dibujado
     EndDrawing();

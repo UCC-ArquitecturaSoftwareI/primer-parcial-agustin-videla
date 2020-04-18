@@ -4,11 +4,10 @@
 
 #include "BlockFactory.h"
 
-Block_Dirt BlockFactory::createBlock(int type, Vector2 xCoordinates) {
-    if(type == 1) {
-        return(Block_Dirt(xCoordinates));
-    }
+ Block* BlockFactory::create(std::string element, int type, Vector2 xCoordinates) {
+     if(element == "dirt"){
+         if(type == 1)  return new Block_Dirt(xCoordinates);
+     }
+     if(element == "iron")  return new Block_Iron(xCoordinates);
 
-
-    return Block_Dirt(Vector2());
 }
