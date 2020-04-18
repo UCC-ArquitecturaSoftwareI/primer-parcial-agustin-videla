@@ -1,6 +1,6 @@
 #include <raylib.h>
-
-#include "clases/Nave.h"
+#include "clases/BlockFactory.h"
+#include <vector>
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -10,7 +10,8 @@ const int screenHeight = 450;
 
 // Variables Globales
 Music music;
-Nave *player;
+BlockFactory* factory;
+std::vector<Block_Dirt> blocks;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -23,7 +24,8 @@ int main() {
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
 
     PlayMusicStream(music);
-    player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
+    factory = new BlockFactory;
+   // player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
 
 
 #if defined(PLATFORM_WEB)  // Para versión Web.
@@ -56,10 +58,9 @@ static void UpdateDrawFrame(void) {
     UpdateMusicStream(music);
 
     // Verifico Entradas de eventos.
-    if (IsKeyDown(KEY_RIGHT)) player->move_x(2.0f);
-    if (IsKeyDown(KEY_LEFT)) player->move_x(-2.0f);
-    if (IsKeyDown(KEY_UP)) player->move_y(-2.0f);
-    if (IsKeyDown(KEY_DOWN)) player->move_y(2.0f);
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        blocks.push_back(factory->createBlock(1, GetMousePosition()));
+    }
 
 
     // Comienzo a dibujar
@@ -68,7 +69,11 @@ static void UpdateDrawFrame(void) {
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    player->draw();
+    for(auto i : blocks) {
+        i.draw();
+    }
+
+
     DrawText("Inicio", 20, 20, 40, LIGHTGRAY);
 
     // Finalizo el dibujado
