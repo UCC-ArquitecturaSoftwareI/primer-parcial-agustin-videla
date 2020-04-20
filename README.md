@@ -5,5 +5,5 @@ El juego que elegimos es un sandbox inspirado en minecraft, específicamente el 
 
 Se puede ver desde: [Github Pages][gh-pages]
 
-[gh-pages]:https://github.com/UCC-ArquitecturaSoftwareI/primer-parcial-agustin-videla
+[gh-pages]:https://ucc-arquitecturasoftwarei.github.io/primer-parcial-agustin-videla/
 [badge]:https://github.com/UCC-ArquitecturaSoftwareI/plantilla-raylib/workflows/Build%20and%20Deploy/badge.svg
