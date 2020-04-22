@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
-project(raylibTemplate)
+project(SquareCraft)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-# Get the source toegher
+# Get the source together
 file(GLOB sources *.cpp)
 
 # Get the source  of classes toegher
-file(GLOB sources_clases clases/*.cpp)
+file(GLOB sources_clases clases/blocks/*.cpp)
 
 
 include("cmake/raylib_web.cmake")
@@ -15,7 +15,7 @@ include("cmake/raylib.cmake")
 
 
 add_executable(${PROJECT_NAME} ${sources} ${sources_clases}
-            clases/Block.h clases/BlockFactory.h clases/Block_Dirt.cpp clases/Block_Iron.cpp clases/Block_Iron.h)
+        clases/blocks/Block.h clases/blocks/BlockFactory.h clases/blocks/Block_Dirt.cpp clases/blocks/Block_Iron.cpp clases/blocks/Block_Iron.h)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})

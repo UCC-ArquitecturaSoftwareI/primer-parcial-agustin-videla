@@ -13,7 +13,7 @@
 class ToolFactory{
 public:
     static Tool *create(std::string name){
-        //if(name == "pickaxe")
+        if(name == "pickaxe")
             return new Pickaxe();
     }
 };

@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "clases/BlockFactory.h"
+#include "clases/blocks/BlockFactory.h"
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
 
@@ -17,6 +17,15 @@ ToolFactory* tool_factory;
 std::vector<Tool*> tools;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
+
+void Delete (Vector2 xCoordinates, std::vector<Block *> *block){ //this function deletes the block is said position
+    for(auto i : *block){
+        if(i->getCoordinates().x == xCoordinates.x && i->getCoordinates().y == xCoordinates.y){
+            delete i;
+            std::cout<<"Elimine \n";
+        }
+    }
+}
 
 int main() {
     // Inicialización de la ventana
@@ -65,6 +74,9 @@ static void UpdateDrawFrame(void) {
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         blocks.push_back(block_factory->create("iron", 1, GetMousePosition()));
+    }
+    if(IsKeyDown(32)) {
+        Delete(GetMousePosition(), &blocks);
     }
 
     // Comienzo a dibujar

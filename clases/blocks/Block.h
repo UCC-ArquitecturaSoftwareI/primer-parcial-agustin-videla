@@ -16,6 +16,7 @@ protected:
 public:
     Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
+    virtual Vector2 getCoordinates() { return this->coordinates;}
     virtual int getX() { return (int)coordinates.x; }
     virtual int getY() { return (int)coordinates.y; }
     virtual Vector2 getSize() { return size; }
