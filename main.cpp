@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "clases/BlockFactory.h"
+#include "clases/Tools/ToolFactory.h"
 #include <vector>
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
@@ -10,8 +11,10 @@ const int screenHeight = 450;
 
 // Variables Globales
 Music music;
-BlockFactory* factory;
+BlockFactory* block_factory;
 std::vector<Block*> blocks;
+ToolFactory* tool_factory;
+std::vector<Tool*> tools;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -24,7 +27,9 @@ int main() {
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
 
     PlayMusicStream(music);
-    factory = new BlockFactory;
+    block_factory = new BlockFactory;
+    tool_factory = new ToolFactory;
+    tools.push_back(tool_factory->create("pickaxe")); //creo un pico por default, mas adelante dependera de la seleccion del usuario
    // player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
 
 
@@ -55,14 +60,12 @@ int main() {
 static void UpdateDrawFrame(void) {
 
     // siempre hay que reproducir la musica que esta actualmente
-    UpdateMusicStream(music);
+    //UpdateMusicStream(music);
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-
-        blocks.push_back(factory->create("iron", 1, GetMousePosition()));
+        blocks.push_back(block_factory->create("iron", 1, GetMousePosition()));
     }
-
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -74,8 +77,7 @@ static void UpdateDrawFrame(void) {
         i->draw();
     }
 
-
-    DrawText("maincraa", 20, 20, 40, LIGHTGRAY);
+    DrawText("SquareCraft", 20, 20, 40, LIGHTGRAY);
 
     // Finalizo el dibujado
     EndDrawing();

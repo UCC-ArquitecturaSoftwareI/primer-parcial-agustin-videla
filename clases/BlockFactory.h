@@ -10,7 +10,7 @@
 #include "string"
 
 /**
- * here we are using the factory method, implemented with parameters
+ * here we are using the block_factory method, implemented with parameters
  * the parameter that determines the end result is element
  */
 class BlockFactory {
