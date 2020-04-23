@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "clases/BlockFactory.h"
+#include "clases/Blocks/BlockFactory.h"
 #include <vector>
 
 #if defined(PLATFORM_WEB) // Para crear HTML5

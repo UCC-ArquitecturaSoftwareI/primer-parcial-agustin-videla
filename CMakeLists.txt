@@ -15,7 +15,7 @@ include("cmake/raylib.cmake")
 
 
 add_executable(${PROJECT_NAME} ${sources} ${sources_clases}
-            clases/Block.h clases/BlockFactory.h clases/Block_Dirt.cpp clases/Block_Iron.cpp clases/Block_Iron.h)
+        clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/Block_Dirt.cpp clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})
