@@ -9,6 +9,8 @@ file(GLOB sources *.cpp)
 # Get the source  of classes toegher
 file(GLOB sources_clases clases/*.cpp)
 
+include("cmake/raylib_web.cmake")
+include("cmake/raylib.cmake")
 
 add_executable(SquareCraft main.cpp
         clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h
