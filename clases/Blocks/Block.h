@@ -10,16 +10,15 @@
 
 class Block {
 protected:
-    std::string texture;
+    Color texture;
     Vector2 coordinates{};
     Vector2 size = {20, 20};
 public:
     Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
-    virtual int getX() { return (int)coordinates.x; }
-    virtual int getY() { return (int)coordinates.y; }
+    virtual Vector2 getCoordinates() { return coordinates; }
     virtual Vector2 getSize() { return size; }
-    virtual void draw() { }
+    virtual Color getColor() { return texture; }
 };
 
 

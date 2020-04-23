@@ -10,10 +10,7 @@
 
 class Block_Iron : public Block {
 public:
-    Block_Iron(Vector2 xCoordinates) : Block(xCoordinates) { texture = "hierro ah"; std::cout<<"estoy re duro lol"<<'\n';}
-    void draw() {
-        DrawRectangleV(coordinates, size, GRAY);
-    }
+    Block_Iron(Vector2 xCoordinates) : Block(xCoordinates) { texture = GRAY; std::cout << "estoy re duro lol" << '\n';}
 };
 
 #endif //RAYLIBTEMPLATE_BLOCK_IRON_H

@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "clases/Blocks/BlockFactory.h"
+#include "clases/Renderer/BlockRenderer.h"
 #include <vector>
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
@@ -11,6 +12,7 @@ const int screenHeight = 450;
 // Variables Globales
 Music music;
 BlockFactory* factory;
+BlockRenderer* blockRenderer;
 std::vector<Block*> blocks;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
@@ -71,7 +73,7 @@ static void UpdateDrawFrame(void) {
 
     // Dibujo todos los elementos del juego.
     for(auto i : blocks) {
-        i->draw();
+        blockRenderer->render(i);
     }
 
 
