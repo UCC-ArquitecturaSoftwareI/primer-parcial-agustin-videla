@@ -13,7 +13,9 @@ include("cmake/raylib_web.cmake")
 include("cmake/raylib.cmake")
 
 add_executable(SquareCraft main.cpp
-        clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h
+        clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp
+        clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h clases/Tools/Tool.h clases/Tools/Tool_Pickaxe.h
+        clases/Tools/Tool_Pickaxe.cpp clases/Tools/ToolFactory.h clases/Tools/ToolFactory.cpp
         clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
