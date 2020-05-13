@@ -2,6 +2,8 @@
 #include "clases/Blocks/BlockFactory.h"
 #include "clases/Renderer/BlockRenderer.h"
 #include <vector>
+#include <unordered_map>
+#include "clases/Vector2Hash/Vector2Hash.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -13,7 +15,7 @@ const int screenHeight = 450;
 Music music;
 BlockFactory* factory;
 BlockRenderer* blockRenderer;
-std::vector<Block*> blocks;
+std::unordered_map<Vector2,Block*,Vector2Hash> blocks;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -62,7 +64,7 @@ static void UpdateDrawFrame(void) {
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
-        blocks.push_back(factory->create("iron", 1, GetMousePosition()));
+        blocks[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
     }
 
 
@@ -73,7 +75,7 @@ static void UpdateDrawFrame(void) {
 
     // Dibujo todos los elementos del juego.
     for(auto i : blocks) {
-        blockRenderer->render(i);
+        blockRenderer->render(i.second);
     }
 
 
