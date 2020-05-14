@@ -63,10 +63,17 @@ static void UpdateDrawFrame(void) {
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-
-        blocks[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
+        if(blocks.find(GetMousePosition()) == blocks.end())
+            blocks[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
     }
 
+    if(IsKeyPressed(KEY_SPACE)) {
+        //Si el bloque que se quiere eliminar existe lo borra
+        if(blocks.find(GetMousePosition()) != blocks.end()) {
+            blocks[GetMousePosition()]->~Block();
+            blocks.erase(GetMousePosition());
+        }
+    }
 
     // Comienzo a dibujar
     BeginDrawing();
