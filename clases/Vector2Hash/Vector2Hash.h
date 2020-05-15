@@ -8,6 +8,9 @@
 #include <raylib.h>
 #include <string>
 
+#include "../Blocks/Block.h"
+
+
 class Vector2Hash {
 public:
     /*

@@ -2,8 +2,7 @@
 #include "clases/Blocks/BlockFactory.h"
 #include "clases/Renderer/BlockRenderer.h"
 #include <vector>
-#include <unordered_map>
-#include "clases/Vector2Hash/Vector2Hash.h"
+#include "clases/Vector2Hash/SingletonHash.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -15,7 +14,7 @@ const int screenHeight = 450;
 Music music;
 BlockFactory* factory;
 BlockRenderer* blockRenderer;
-std::unordered_map<Vector2,Block*,Vector2Hash> blocks;
+SingletonHash &blocks = SingletonHash::getInstance();
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -63,15 +62,16 @@ static void UpdateDrawFrame(void) {
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        if(blocks.find(GetMousePosition()) == blocks.end())
-            blocks[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
+        if(blocks.hash().find(GetMousePosition()) == blocks.hash().end())
+            blocks.hash()[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
     }
+
 
     if(IsKeyPressed(KEY_SPACE)) {
         //Si el bloque que se quiere eliminar existe lo borra
-        if(blocks.find(GetMousePosition()) != blocks.end()) {
-            blocks[GetMousePosition()]->~Block();
-            blocks.erase(GetMousePosition());
+        if(blocks.hash().find(GetMousePosition()) != blocks.hash().end()) {
+            blocks.hash()[GetMousePosition()]->~Block();
+            blocks.hash().erase(GetMousePosition());
         }
     }
 
@@ -81,7 +81,7 @@ static void UpdateDrawFrame(void) {
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    for(auto i : blocks) {
+    for(auto i : blocks.hash()) {
         blockRenderer->render(i.second);
     }
 

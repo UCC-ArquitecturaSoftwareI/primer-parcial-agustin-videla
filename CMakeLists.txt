@@ -17,8 +17,7 @@ include("cmake/raylib.cmake")
 add_executable(SquareCraft main.cpp
         clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h
         clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
-        clases/Mapa/Mapa.cpp clases/Mapa/Mapa.h
-        clases/Vector2Hash/Vector2Hash.cpp clases/Vector2Hash/Vector2Hash.h)
+        clases/Vector2Hash/Vector2Hash.h clases/Vector2Hash/SingletonHash.h)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})
