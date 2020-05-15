@@ -1,7 +1,9 @@
 #include <raylib.h>
-#include "clases/blocks/BlockFactory.h"
+#include "clases/Blocks/BlockFactory.h"
+#include "clases/Renderer/BlockRenderer.h"
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
+#include "clases/Vector2Hash/SingletonHash.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -11,21 +13,13 @@ const int screenHeight = 450;
 
 // Variables Globales
 Music music;
-BlockFactory* block_factory;
-std::vector<Block*> blocks;
-ToolFactory* tool_factory;
+BlockFactory* factory;
+ToolFactory* toolFactory;
+BlockRenderer* blockRenderer;
+SingletonHash &blocks = SingletonHash::getInstance();
 std::vector<Tool*> tools;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
-
-void Delete (Vector2 xCoordinates, std::vector<Block *> *block){ //this function deletes the block is said position
-    for(auto i : *block){
-        if(i->getCoordinates().x == xCoordinates.x && i->getCoordinates().y == xCoordinates.y){
-            delete i;
-            std::cout<<"Elimine \n";
-        }
-    }
-}
 
 int main() {
     // Inicialización de la ventana
@@ -36,9 +30,11 @@ int main() {
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
 
     PlayMusicStream(music);
-    block_factory = new BlockFactory;
-    tool_factory = new ToolFactory;
-    tools.push_back(tool_factory->create("pickaxe")); //creo un pico por default, mas adelante dependera de la seleccion del usuario
+    factory = new BlockFactory;
+    toolFactory = new ToolFactory;
+
+    tools.push_back(toolFactory->create("pickaxe")); //solo para probar que funcione bien
+    std::cout<<"the damage caused is: "<<tools[0]->getdamage()<<"\n"; //solo para probar que funcione bien
    // player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
 
 
@@ -69,15 +65,23 @@ int main() {
 static void UpdateDrawFrame(void) {
 
     // siempre hay que reproducir la musica que esta actualmente
-    //UpdateMusicStream(music);
+    //UpdateMusicStream(music); //la saqué porque me cansó
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        blocks.push_back(block_factory->create("iron", 1, GetMousePosition()));
+        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) == blocks.hash().end())
+            blocks.hash()[Vector2Adaptor(GetMousePosition())] = factory->create("iron", 1, GetMousePosition());
     }
-    if(IsKeyDown(32)) {
-        Delete(GetMousePosition(), &blocks);
+
+
+    if(IsKeyPressed(KEY_SPACE)) {
+        //Si el bloque que se quiere eliminar existe lo borra
+        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) != blocks.hash().end()) {
+            blocks.hash()[Vector2Adaptor(GetMousePosition())]->~Block();
+            blocks.hash().erase(Vector2Adaptor(GetMousePosition()));
+        }
     }
+
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -85,8 +89,8 @@ static void UpdateDrawFrame(void) {
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    for(auto i : blocks) {
-        i->draw();
+    for(auto i : blocks.hash()) {
+        blockRenderer->render(i.second);
     }
 
     DrawText("SquareCraft", 20, 20, 40, LIGHTGRAY);

@@ -1,8 +1,14 @@
 ![Build and Deploy][badge]
-# Proyecto
+# SquareCraft
 
-El juego que elegimos es un sandbox inspirado en minecraft, específicamente el modo creativo.
+###integrantes:
+Ribetti Facundo 
 
+Videla Agustín
+
+###Descripción: 
+El juego que vamos a realizar es un sandbox inspirado en minecraft, específicamente el modo creativo.
+***
 Se puede ver desde: [Github Pages][gh-pages]
 
 [gh-pages]:https://ucc-arquitecturasoftwarei.github.io/primer-parcial-agustin-videla/

@@ -4,3 +4,7 @@
 
 #include "ToolFactory.h"
 
+Tool *ToolFactory::create(std::string name) {
+    if(name == "pickaxe")
+        return new Pickaxe();
+}

@@ -3,3 +3,8 @@
 //
 
 #include "Tool_Pickaxe.h"
+
+int Pickaxe::getdamage() {
+    //std::cout<<"the damage caused is 10\n";
+    return damage;
+}

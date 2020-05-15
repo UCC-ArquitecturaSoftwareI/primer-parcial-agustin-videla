@@ -1,6 +1,3 @@
-//
-// Created by ribet on 21/4/2020.
-//
 
 #ifndef RAYLIBTEMPLATE_TOOL_H
 #define RAYLIBTEMPLATE_TOOL_H
