@@ -69,16 +69,16 @@ static void UpdateDrawFrame(void) {
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        if(blocks.hash().find(GetMousePosition()) == blocks.hash().end())
-            blocks.hash()[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
+        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) == blocks.hash().end())
+            blocks.hash()[Vector2Adaptor(GetMousePosition())] = factory->create("iron", 1, GetMousePosition());
     }
 
 
     if(IsKeyPressed(KEY_SPACE)) {
         //Si el bloque que se quiere eliminar existe lo borra
-        if(blocks.hash().find(GetMousePosition()) != blocks.hash().end()) {
-            blocks.hash()[GetMousePosition()]->~Block();
-            blocks.hash().erase(GetMousePosition());
+        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) != blocks.hash().end()) {
+            blocks.hash()[Vector2Adaptor(GetMousePosition())]->~Block();
+            blocks.hash().erase(Vector2Adaptor(GetMousePosition()));
         }
     }
 

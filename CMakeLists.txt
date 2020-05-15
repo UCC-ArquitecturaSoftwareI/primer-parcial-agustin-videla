@@ -19,7 +19,7 @@ add_executable(SquareCraft main.cpp
         clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h clases/Tools/Tool.h clases/Tools/Tool_Pickaxe.h
         clases/Tools/Tool_Pickaxe.cpp clases/Tools/ToolFactory.h clases/Tools/ToolFactory.cpp
         clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
-	clases/Vector2Hash/Vector2Hash.h clases/Vector2Hash/SingletonHash.h)
+		clases/Vector2Hash/Vector2Hash.h clases/Vector2Hash/SingletonHash.h clases/Vector2Hash/Vector2Adaptor.h)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})

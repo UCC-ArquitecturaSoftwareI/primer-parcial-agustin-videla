@@ -7,19 +7,17 @@
 
 #include <raylib.h>
 #include <string>
-
-#include "../Blocks/Block.h"
-
+#include "Vector2Adaptor.h"
 
 class Vector2Hash {
 public:
     /*
-     * Concatena las coordenadas del Vector2 para formar una llave única
+     * Concatena las coordenadas del Vector2Adaptor para formar una llave única
      */
-    int operator()(const Vector2 v) const
+    int operator()(const Vector2Adaptor v) const
     {
-        std::string sX = std::to_string(v.x);
-        std::string sY = std::to_string(v.y);
+        std::string sX = std::to_string(v.vector.x);
+        std::string sY = std::to_string(v.vector.y);
         std::string fV = sX + sY;
         return std::stoi(fV);
     }

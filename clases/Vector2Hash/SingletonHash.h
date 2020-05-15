@@ -14,14 +14,14 @@
  */
 class   SingletonHash {
 private:
-    std::unordered_map<Vector2,Block*,Vector2Hash> table;
+    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash> table;
     SingletonHash(){};
 public:
     static SingletonHash& getInstance(){
         static SingletonHash hash;
         return hash;
     }
-    std::unordered_map<Vector2,Block*,Vector2Hash>& hash(){
+    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash>& hash(){
         return table;
     }
 };
