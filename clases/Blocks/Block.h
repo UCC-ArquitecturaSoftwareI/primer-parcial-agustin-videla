@@ -6,15 +6,17 @@
 #define RAYLIBTEMPLATE_BLOCK_H
 
 #include <raylib.h>
+#include <iostream>
 #include <string>
 
 class Block {
 protected:
-    Color texture;
+    Color texture{};
     Vector2 coordinates{};
     Vector2 size = {20, 20};
 public:
-    Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
+    explicit Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
+    ~Block() { std::cout << "me rompi ahre" << '\n'; };
     virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     virtual Vector2 getCoordinates() { return coordinates; }
     virtual Vector2 getSize() { return size; }

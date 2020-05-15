@@ -3,6 +3,7 @@
 #include "clases/Renderer/BlockRenderer.h"
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
+#include "clases/Vector2Hash/SingletonHash.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -12,13 +13,11 @@ const int screenHeight = 450;
 
 // Variables Globales
 Music music;
-BlockFactory* blockFactory;
+BlockFactory* factory;
 ToolFactory* toolFactory;
 BlockRenderer* blockRenderer;
-std::vector<Block*> blocks;
+SingletonHash &blocks = SingletonHash::getInstance();
 std::vector<Tool*> tools;
-
-
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -31,12 +30,11 @@ int main() {
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
 
     PlayMusicStream(music);
-    blockFactory = new BlockFactory;
+    factory = new BlockFactory;
     toolFactory = new ToolFactory;
 
     tools.push_back(toolFactory->create("pickaxe")); //solo para probar que funcione bien
     std::cout<<"the damage caused is: "<<tools[0]->getdamage()<<"\n"; //solo para probar que funcione bien
-
    // player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
 
 
@@ -71,7 +69,17 @@ static void UpdateDrawFrame(void) {
 
     // Verifico Entradas de eventos.
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        blocks.push_back(blockFactory->create("iron", 1, GetMousePosition()));
+        if(blocks.hash().find(GetMousePosition()) == blocks.hash().end())
+            blocks.hash()[GetMousePosition()] = factory->create("iron", 1, GetMousePosition());
+    }
+
+
+    if(IsKeyPressed(KEY_SPACE)) {
+        //Si el bloque que se quiere eliminar existe lo borra
+        if(blocks.hash().find(GetMousePosition()) != blocks.hash().end()) {
+            blocks.hash()[GetMousePosition()]->~Block();
+            blocks.hash().erase(GetMousePosition());
+        }
     }
 
 
@@ -81,8 +89,8 @@ static void UpdateDrawFrame(void) {
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    for(auto i : blocks) {
-        blockRenderer->render(i);
+    for(auto i : blocks.hash()) {
+        blockRenderer->render(i.second);
     }
 
 
