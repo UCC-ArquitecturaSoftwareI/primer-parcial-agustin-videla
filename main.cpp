@@ -4,6 +4,7 @@
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
 #include "clases/Vector2Hash/SingletonHash.h"
+#include "resources/Mapa/Mapa.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -18,6 +19,7 @@ ToolFactory* toolFactory;
 BlockRenderer* blockRenderer;
 SingletonHash &blocks = SingletonHash::getInstance();
 std::vector<Tool*> tools;
+Mapa *mapa;
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -30,6 +32,9 @@ int main() {
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
 
     PlayMusicStream(music);
+
+    mapa = new Mapa("dfgdfgfd"); //cuando creemos player, la posicion iniial es la dada por Vector2 player_init_pos;
+
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
 
