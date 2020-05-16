@@ -12,14 +12,11 @@
 class Vector2Hash {
 public:
     /*
-     * Concatena las coordenadas del Vector2Adaptor para formar una llave única
+     * Funcion de Hash para vectores
      */
     int operator()(const Vector2Adaptor v) const
     {
-        std::string sX = std::to_string(v.vector.x);
-        std::string sY = std::to_string(v.vector.y);
-        std::string fV = sX + sY;
-        return std::stoi(fV);
+        return ((v.vector.x + v.vector.y)*(v.vector.x+v.vector.y+1))/2+v.vector.y;
     }
 };
 

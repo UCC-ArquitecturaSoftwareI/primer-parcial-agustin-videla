@@ -10,6 +10,7 @@ class Player {
     Player() = default;
 public:
     Vector2 pos{};
+    Vector2 size = {40, 80};
     static Player& getInstance(){
         static Player player;
         return player;

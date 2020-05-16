@@ -7,6 +7,7 @@
 
 #include <raylib.h>
 #include "../Player/Player.h"
+#include "../Blocks/Block.h"
 
 /**
  * Recibe coordenadas en relación a la pantalla y las convierte para que estén en relación al jugador
