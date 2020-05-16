@@ -21,7 +21,7 @@ public:
         static SingletonHash hash;
         return hash;
     }
-    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash>& hash(){
+    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash>& all(){
         return table;
     }
 };

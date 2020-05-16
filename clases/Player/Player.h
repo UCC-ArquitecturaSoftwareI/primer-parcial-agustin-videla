@@ -6,11 +6,15 @@
 #define SQUARECRAFT_PLAYER_H
 
 
-
 class Player {
-
+    Player() = default;
+public:
+    Vector2 pos{};
+    static Player& getInstance(){
+        static Player player;
+        return player;
+    }
 };
-
 
 
 #endif //SQUARECRAFT_PLAYER_H
