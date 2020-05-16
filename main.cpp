@@ -3,7 +3,8 @@
 #include "clases/Renderer/BlockRenderer.h"
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
-#include "clases/Vector2Hash/SingletonHash.h"
+#include "clases/Vector2Functions/HashFacade.h"
+#include "clases/Player/Player.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -16,8 +17,10 @@ Music music;
 BlockFactory* factory;
 ToolFactory* toolFactory;
 BlockRenderer* blockRenderer;
-SingletonHash &blocks = SingletonHash::getInstance();
+Player &player = Player::getInstance();
+Hash hash;
 std::vector<Tool*> tools;
+
 
 static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
 
@@ -32,6 +35,7 @@ int main() {
     PlayMusicStream(music);
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
+    player.pos = (Vector2){screenWidth/2, screenHeight/2};
 
     tools.push_back(toolFactory->create("pickaxe")); //solo para probar que funcione bien
     std::cout<<"the damage caused is: "<<tools[0]->getdamage()<<"\n"; //solo para probar que funcione bien
@@ -67,29 +71,30 @@ static void UpdateDrawFrame(void) {
     // siempre hay que reproducir la musica que esta actualmente
     //UpdateMusicStream(music); //la saqué porque me cansó
 
+    if (IsKeyDown(KEY_RIGHT)) player.pos.x += 5;
+    else if (IsKeyDown(KEY_LEFT)) player.pos.x -= 5;
+    if (IsKeyDown(KEY_UP)) player.pos.y -= 5;
+    else if (IsKeyDown(KEY_DOWN)) player.pos.y += 5;
+
     // Verifico Entradas de eventos.
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) == blocks.hash().end())
-            blocks.hash()[Vector2Adaptor(GetMousePosition())] = factory->create("iron", 1, GetMousePosition());
-    }
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
 
 
-    if(IsKeyPressed(KEY_SPACE)) {
-        //Si el bloque que se quiere eliminar existe lo borra
-        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) != blocks.hash().end()) {
-            blocks.hash()[Vector2Adaptor(GetMousePosition())]->~Block();
-            blocks.hash().erase(Vector2Adaptor(GetMousePosition()));
-        }
-    }
+
+    if(IsKeyPressed(KEY_SPACE))
+        hash.remove(GetMousePosition());
 
 
     // Comienzo a dibujar
     BeginDrawing();
 
+    DrawRectangleV(player.pos, {100,100}, RED );
+
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    for(auto i : blocks.hash()) {
+    for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
 
