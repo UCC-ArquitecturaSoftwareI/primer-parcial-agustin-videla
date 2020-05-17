@@ -35,7 +35,8 @@ public:
     }
 
     Block* get(Vector2 key) {
-        return table.all()[Vector2Adaptor(key)]; //todo verificar que esto funciona correctamente
+        key = vectorTransform(key);
+        return table.all()[Vector2Adaptor(key)];
     }
 
     bool exists(Vector2 key) {
