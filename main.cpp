@@ -23,7 +23,7 @@ Player &player = Player::getInstance();
 Hash hash;
 std::vector<Tool*> tools;
 Camera2D camera;
-//CollisionObserver botonazo;
+CollisionObserver botonazo;
 
 
 void initializer();
@@ -69,18 +69,24 @@ static void UpdateDrawFrame(void) {
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+        if(!hash.exists(GetMousePosition()))
+            hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+        if(!hash.exists(GetMousePosition()))
+            hash.put(GetMousePosition(), factory->create("dirt", 1, GetMousePosition()));
     if(IsKeyPressed(KEY_SPACE))
         hash.remove(GetMousePosition());
+    if(IsKeyPressed(KEY_R)) {
+        std::cout << hash.get(GetMousePosition())->getCage().x << "," << hash.get(GetMousePosition())->getCage().y << '\n';
+    }
 
     //La camara sigue al jugador
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
 
-    //todo debuggear colisiones
- /*   botonazo.checkCollision();
+    botonazo.checkCollision();
     if(botonazo.colides) {
         std::cout << "ouch" << '\n';
-    }*/
+    }
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -88,19 +94,23 @@ static void UpdateDrawFrame(void) {
     BeginMode2D(camera);
 
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
-
     // Dibujo todos los elementos del juego.
     for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
 
     playerRenderer->render(&player);
+    DrawRectangle(player.cage.x, player.cage.y,10,10, BLUE);
 
 
     EndMode2D();
+    std::string x = std::to_string((int)player.cage.x);
+    std::string y = std::to_string((int)player.cage.y);
+    std::string coor = x + "," + y;
+    const char* c = coor.c_str();
 
-    DrawText("SquareCraft", 40, 40, 40, LIGHTGRAY);
-
+    DrawText("Squarecraft", 40, 40, 40, LIGHTGRAY);
+    DrawText(c, screenWidth-200, 40, 40, LIGHTGRAY);
     EndDrawing();
 }
 
