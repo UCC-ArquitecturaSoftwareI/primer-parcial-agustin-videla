@@ -5,6 +5,7 @@
 #ifndef RAYLIBTEMPLATE_RENDERER_H
 #define RAYLIBTEMPLATE_RENDERER_H
 
+#include <raylib.h>
 
 class Renderer {
 public:

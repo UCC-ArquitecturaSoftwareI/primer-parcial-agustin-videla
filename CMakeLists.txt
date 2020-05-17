@@ -15,12 +15,14 @@ include("cmake/raylib.cmake")
 
 
 add_executable(SquareCraft main.cpp
-        clases/Blocks/Block.h clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp
+        clases/Blocks/Block.h clases/Blocks/Block.cpp clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp
         clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h clases/Tools/Tool.h clases/Tools/Tool_Pickaxe.h
-		clases/Tools/ToolFactory.h
-		Libraries/tileson.hpp
-		clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
-		clases/Vector2Hash/Vector2Hash.h clases/Vector2Hash/SingletonHash.h clases/Vector2Hash/Vector2Adaptor.h)
+        clases/Tools/Tool_Pickaxe.cpp clases/Tools/ToolFactory.h clases/Tools/ToolFactory.cpp
+        clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
+		clases/Renderer/PlayerRenderer.h clases/Renderer/PlayerRenderer.cpp
+		clases/Vector2Functions/Vector2Hash.h clases/Vector2Functions/SingletonHash.h
+		clases/Vector2Functions/Vector2Adaptor.h clases/Vector2Functions/HashFacade.h
+		clases/Vector2Functions/VectorTransform.h clases/Vector2Functions/VectorTransform.cpp)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})

@@ -13,15 +13,14 @@ class Block {
 protected:
     Color texture{};
     Vector2 coordinates{};
-    Vector2 size = {20, 20};
+    static Vector2 size;
 public:
     explicit Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     ~Block() { std::cout << "me rompi ahre" << '\n'; };
     virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     virtual Vector2 getCoordinates() { return coordinates; }
-    virtual Vector2 getSize() { return size; }
+    static Vector2 getSize() { return size; }
     virtual Color getColor() { return texture; }
 };
-
 
 #endif //RAYLIBTEMPLATE_BLOCK_H
