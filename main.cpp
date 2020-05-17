@@ -5,6 +5,7 @@
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
 #include "clases/Vector2Functions/HashFacade.h"
+#include "clases/Collisions/CollisionObserver.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -22,6 +23,8 @@ Player &player = Player::getInstance();
 Hash hash;
 std::vector<Tool*> tools;
 Camera2D camera;
+//CollisionObserver botonazo;
+
 
 void initializer();
 static void UpdateDrawFrame();          // Función dedicada a operar cada frame
@@ -59,10 +62,10 @@ static void UpdateDrawFrame(void) {
     //UpdateMusicStream(music); //la saqué porque me cansó
 
     // Verifico Entradas de eventos.
-    if (IsKeyDown(KEY_RIGHT)) player.pos.x += 5;
-    else if (IsKeyDown(KEY_LEFT)) player.pos.x -= 5;
-    if (IsKeyDown(KEY_UP)) player.pos.y -= 5;
-    else if (IsKeyDown(KEY_DOWN)) player.pos.y += 5;
+    if (IsKeyDown(KEY_RIGHT)) player.cage.x += 5;
+    else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 5;
+    if (IsKeyDown(KEY_UP)) player.cage.y -= 5;
+    else if (IsKeyDown(KEY_DOWN)) player.cage.y += 5;
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -71,7 +74,13 @@ static void UpdateDrawFrame(void) {
         hash.remove(GetMousePosition());
 
     //La camara sigue al jugador
-    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
+    camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
+
+    //todo debuggear colisiones
+ /*   botonazo.checkCollision();
+    if(botonazo.colides) {
+        std::cout << "ouch" << '\n';
+    }*/
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -84,6 +93,7 @@ static void UpdateDrawFrame(void) {
     for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
+
     playerRenderer->render(&player);
 
 
@@ -103,10 +113,11 @@ void initializer() {
 
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
-    player.pos = (Vector2){screenWidth/2, screenHeight/2};
+    player.cage.x = screenWidth/2;
+    player.cage.y = screenHeight/2;
 
     //camera init
-    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
+    camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;

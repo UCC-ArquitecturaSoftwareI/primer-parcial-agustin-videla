@@ -12,13 +12,15 @@
 class Block {
 protected:
     Color texture{};
-    Vector2 coordinates{};
+    //Vector2 coordinates{};
     static Vector2 size;
+    Rectangle cage; //todo debuggear colisiones
 public:
-    explicit Block(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
+    explicit Block(Vector2 xCoordinates);
     ~Block() { std::cout << "me rompi ahre" << '\n'; };
-    virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
-    virtual Vector2 getCoordinates() { return coordinates; }
+    //virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
+    //virtual Vector2 getCoordinates() { return coordinates; }
+    virtual  Rectangle getCage() { return cage; }
     static Vector2 getSize() { return size; }
     virtual Color getColor() { return texture; }
 };

@@ -5,16 +5,18 @@
 #ifndef SQUARECRAFT_PLAYER_H
 #define SQUARECRAFT_PLAYER_H
 
+#include <raylib.h>
 
 class Player {
-    Player() = default;
+    Player() { cage.height = size.x; cage.width = size.y; }
+    static Vector2 size;
 public:
-    Vector2 pos{};
-    Vector2 size = {40, 80};
+    Rectangle cage { }; //colision rectangle //todo debuggear colisiones
     static Player& getInstance(){
         static Player player;
         return player;
     }
+//    static Vector2 getSize() { return size; }
 };
 
 
