@@ -24,6 +24,7 @@ public:
 
 Mapa::Mapa(std::string file) {
     tson::Tileson parser;
+    //tson::Map map = parser.parse(fs::path("../resources/Mapa/EntitledMap1.json"));
     map = parser.parse("../resources/Mapa/entitledMap.json");
 
     if(map.getStatus() == tson::ParseStatus::OK) {
@@ -33,19 +34,26 @@ Mapa::Mapa(std::string file) {
             map_tileset = &tileset;
         }
 
-        auto objs = map.getLayer("Capa de Objetos 1"); //obtengo la capa de suelo
-        tson::Object *player = objs->firstObj("Player"); //obtengo los datos del jugador
+        auto objs = map.getLayer("Capa de objetos 1"); //obtengo la capa objetos
+        //tson::Object *player = objs->firstObj("Player"); //obtengo los datos del jugador
         //player_init_pos.x = player->getPosition().x;
         //player_init_pos.y = player->getPosition().y;
 
-        std::cout<<"posicion x: " << player->getPosition().x;
-        std::cout<<"posicion y: " << player->getPosition().y;
+        //std::cout<<"posicion x: " << player->getPosition().x;
+        //std::cout<<"posicion y: " << player->getPosition().y;
 
         for(auto &obj : objs->getObjects()){
             //revisa todos los objetos
             std::cout<<"Nombre: " << obj.getName() << std::endl;
         }
+        /*
+        for(auto &lay : map.getLayers()){
+            //std::cout<<"Nombre: " << lay.getName() << std::endl;
+            for(auto &[pos, tile] : lay.getTileData()){
 
+            }
+        }
+        */
     }
 }
 
@@ -56,6 +64,8 @@ void Mapa::dibujar() {
     tile_rec.width = map.getTileSize().x;
     tile_rec.height = map.getTileSize().y;
 
+    //std::cout<<tile_rec.height<<std::endl;
+
     int firstId = map_tileset->getFirstgid(); //First tile id of the tileset
     int columns = map_tileset->getColumns(); //For the demo map it is 8.
     int margin = map_tileset->getMargin();
@@ -64,16 +74,21 @@ void Mapa::dibujar() {
     auto &c = map.getBackgroundColor();
     ClearBackground({c.r ,c.g, c.b, c.a}); // limpio la pantalla con el color de fondo del mapa
 
-    for (auto nombre: {"Floor"}){ //nombre que yo le doy a las capas y las dibuja en el orden escrito
-        auto *layer = map.getLayer("Floor");
-        //std::cout<<"F*ck \n";
-        for (auto&[pos, tile] : layer->getTileData()){ // loops through all existing tiles
-            if(tile != nullptr) {
-                tson::Vector2f position = { (float) std::get<0>(pos) * map.getTileSize().x,
-                                            (float) std::get<1>(pos) * map.getTileSize().y};
+    for (auto nombre: {"cosas"}){ //nombre que yo le doy a las capas y las dibuja en el orden escrito
+        auto *layer = map.getLayer(nombre);
 
+        //std::cout<<layer->getName()<<std::endl;
+        std::cout<<"Fuck1 \n"; ///hasta acá llega, para abajo se rompe
+        for (auto &[id, tile] : layer->getTileData()){ // loops through all existing tiles
+            std::cout<<"Fuck \n";
+            //std::cout<< tile->getId() <<" fuck \n";
+
+            if(tile != nullptr) { //todo porque me da que todos son nulos??????????????
+                tson::Vector2f position = {(float) std::get<0>(id) * map.getTileSize().x,
+                                           (float) std::get<1>(id) * map.getTileSize().y};
+
+                std::cout<<"Fuck \n";
                 int baseTilePositon = (tile->getId() - firstId);
-                std::cout<<"F*ck \n";
                 int tileModX = (baseTilePositon % columns);
                 int currentRow = (baseTilePositon / columns);
                 int offsetx = tileModX * (map.getTileSize().x + space) + margin;
