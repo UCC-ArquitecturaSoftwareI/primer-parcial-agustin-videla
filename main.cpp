@@ -1,10 +1,10 @@
 #include <raylib.h>
 #include "clases/Blocks/BlockFactory.h"
 #include "clases/Renderer/BlockRenderer.h"
+#include "clases/Renderer/PlayerRenderer.h"
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
-#include "clases/Vector2Hash/SingletonHash.h"
-#include "resources/Mapa/Mapa.h"
+#include "clases/Vector2Functions/HashFacade.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -17,37 +17,24 @@ Music music;
 BlockFactory* factory;
 ToolFactory* toolFactory;
 BlockRenderer* blockRenderer;
-SingletonHash &blocks = SingletonHash::getInstance();
+PlayerRenderer* playerRenderer;
+Player &player = Player::getInstance();
+Hash hash;
 std::vector<Tool*> tools;
-Mapa *mapa;
+Camera2D camera;
 
-static void UpdateDrawFrame(void);          // Función dedicada a operar cada frame
+void initializer();
+static void UpdateDrawFrame();          // Función dedicada a operar cada frame
 
 int main() {
-    // Inicialización de la ventana
-    InitWindow(screenWidth, screenHeight, "raylib template - advance game");
-    InitAudioDevice();              // Initialize audio device
 
-    /// Ejemplo de utilización de audio.
-    music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
-
-    PlayMusicStream(music);
-
-    mapa = new Mapa("dfgdfgfd"); //cuando creemos player, la posicion iniial es la dada por Vector2 player_init_pos;
-
-    factory = new BlockFactory;
-    toolFactory = new ToolFactory;
-
-    tools.push_back(toolFactory->create("pickaxe")); //solo para probar que funcione bien
-    std::cout<<"the damage caused is: "<<tools[0]->getdamage()<<"\n"; //solo para probar que funcione bien
-   // player = new Nave("resources/ship.png", Vector2{screenWidth / 2, screenHeight / 2});
-
+    initializer();
 
 #if defined(PLATFORM_WEB)  // Para versión Web.
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
-    // Main loop
+    //Main Loop
     while (!WindowShouldClose()) {
         UpdateDrawFrame();
     }
@@ -69,37 +56,58 @@ int main() {
  */
 static void UpdateDrawFrame(void) {
 
-    // siempre hay que reproducir la musica que esta actualmente
     //UpdateMusicStream(music); //la saqué porque me cansó
 
     // Verifico Entradas de eventos.
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) == blocks.hash().end())
-            blocks.hash()[Vector2Adaptor(GetMousePosition())] = factory->create("iron", 1, GetMousePosition());
-    }
+    if (IsKeyDown(KEY_RIGHT)) player.pos.x += 5;
+    else if (IsKeyDown(KEY_LEFT)) player.pos.x -= 5;
+    if (IsKeyDown(KEY_UP)) player.pos.y -= 5;
+    else if (IsKeyDown(KEY_DOWN)) player.pos.y += 5;
 
 
-    if(IsKeyPressed(KEY_SPACE)) {
-        //Si el bloque que se quiere eliminar existe lo borra
-        if(blocks.hash().find(Vector2Adaptor(GetMousePosition())) != blocks.hash().end()) {
-            blocks.hash()[Vector2Adaptor(GetMousePosition())]->~Block();
-            blocks.hash().erase(Vector2Adaptor(GetMousePosition()));
-        }
-    }
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+    if(IsKeyPressed(KEY_SPACE))
+        hash.remove(GetMousePosition());
 
+    //La camara sigue al jugador
+    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
 
     // Comienzo a dibujar
     BeginDrawing();
 
+    BeginMode2D(camera);
+
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
 
     // Dibujo todos los elementos del juego.
-    for(auto i : blocks.hash()) {
+    for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
+    playerRenderer->render(&player);
 
-    DrawText("SquareCraft", 20, 20, 40, LIGHTGRAY);
 
-    // Finalizo el dibujado
+    EndMode2D();
+
+    DrawText("SquareCraft", 40, 40, 40, LIGHTGRAY);
+
     EndDrawing();
+}
+
+void initializer() {
+    InitWindow(screenWidth, screenHeight, "Squarecraft");
+    //music init
+    InitAudioDevice();
+    music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
+    PlayMusicStream(music);
+
+    factory = new BlockFactory;
+    toolFactory = new ToolFactory;
+    player.pos = (Vector2){screenWidth/2, screenHeight/2};
+
+    //camera init
+    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
+    camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
 }
