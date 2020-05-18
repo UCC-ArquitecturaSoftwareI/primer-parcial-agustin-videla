@@ -25,16 +25,19 @@ public:
 Mapa::Mapa(std::string file) {
     tson::Tileson parser;
     //tson::Map map = parser.parse(fs::path("../resources/Mapa/EntitledMap1.json"));
-    map = parser.parse("../resources/Mapa/entitledMap.json");
+    map = parser.parse("../resources/Mapa/EntitledMap1.json");
+
+    std::cout<<"Fuck \n";
 
     if(map.getStatus() == tson::ParseStatus::OK) {
         for (auto &tileset : map.getTilesets()){
+            std::cout<<"Fuck \n";
             map_tex = LoadTexture("../resources/Mapa/totatilly-not-minecraft-textures.png");
             //map_tex = LoadTexture(fs::path("resources/Mapa/" + tileset.getImage().string()).c_str());
             map_tileset = &tileset;
         }
 
-        auto objs = map.getLayer("Capa de objetos 1"); //obtengo la capa objetos
+        auto objs = map.getLayer("Objetos"); //obtengo la capa objetos
         //tson::Object *player = objs->firstObj("Player"); //obtengo los datos del jugador
         //player_init_pos.x = player->getPosition().x;
         //player_init_pos.y = player->getPosition().y;

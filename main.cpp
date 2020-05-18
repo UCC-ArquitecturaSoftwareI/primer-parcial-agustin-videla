@@ -5,7 +5,7 @@
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
 #include "clases/Vector2Functions/HashFacade.h"
-#include "resources/Mapa/Mapa.h"
+
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
 #endif
@@ -21,7 +21,6 @@ PlayerRenderer* playerRenderer;
 Player &player = Player::getInstance();
 Hash hash;
 std::vector<Tool*> tools;
-Mapa *mapa;
 Camera2D camera;
 
 void initializer();
@@ -80,7 +79,6 @@ static void UpdateDrawFrame(void) {
     BeginMode2D(camera);
 
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
-    mapa->dibujar();
 
     // Dibujo todos los elementos del juego.
     for(auto i : hash.table.all()) {
@@ -106,7 +104,6 @@ void initializer() {
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
     player.pos = (Vector2){screenWidth/2, screenHeight/2};
-    mapa = new Mapa("../resources/Mapa/entitledMap.json"); //cuando creemos player, la posicion iniial es la dada por Vector2 player_init_pos;
 
     //camera init
     camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
