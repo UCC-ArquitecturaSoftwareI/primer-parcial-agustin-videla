@@ -5,5 +5,5 @@
 #include "PlayerRenderer.h"
 
 void PlayerRenderer::render(Player *player) {
-    DrawRectangleV(player->pos, player->size, RED);
+    DrawRectangleRec(player->cage, RED);
 }

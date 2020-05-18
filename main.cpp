@@ -5,6 +5,7 @@
 #include "clases/Tools/ToolFactory.h"
 #include <vector>
 #include "clases/Vector2Functions/HashFacade.h"
+#include "clases/Collisions/CollisionObserver.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -22,6 +23,8 @@ Player &player = Player::getInstance();
 Hash hash;
 std::vector<Tool*> tools;
 Camera2D camera;
+CollisionObserver botonazo;
+
 
 void initializer();
 static void UpdateDrawFrame();          // Función dedicada a operar cada frame
@@ -59,19 +62,31 @@ static void UpdateDrawFrame(void) {
     //UpdateMusicStream(music); //la saqué porque me cansó
 
     // Verifico Entradas de eventos.
-    if (IsKeyDown(KEY_RIGHT)) player.pos.x += 5;
-    else if (IsKeyDown(KEY_LEFT)) player.pos.x -= 5;
-    if (IsKeyDown(KEY_UP)) player.pos.y -= 5;
-    else if (IsKeyDown(KEY_DOWN)) player.pos.y += 5;
+    if (IsKeyDown(KEY_RIGHT)) player.cage.x += 5;
+    else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 5;
+    if (IsKeyDown(KEY_UP)) player.cage.y -= 5;
+    else if (IsKeyDown(KEY_DOWN)) player.cage.y += 5;
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+        if(!hash.exists(GetMousePosition()))
+            hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+        if(!hash.exists(GetMousePosition()))
+            hash.put(GetMousePosition(), factory->create("dirt", 1, GetMousePosition()));
     if(IsKeyPressed(KEY_SPACE))
         hash.remove(GetMousePosition());
+    if(IsKeyPressed(KEY_R)) {
+        std::cout << hash.get(GetMousePosition())->getCage().x << "," << hash.get(GetMousePosition())->getCage().y << '\n';
+    }
 
     //La camara sigue al jugador
-    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
+    camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
+
+    botonazo.checkCollision();
+    if(botonazo.colides) {
+        std::cout << "ouch" << '\n';
+    }
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -79,18 +94,23 @@ static void UpdateDrawFrame(void) {
     BeginMode2D(camera);
 
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
-
     // Dibujo todos los elementos del juego.
     for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
+
     playerRenderer->render(&player);
+    DrawRectangle(player.cage.x, player.cage.y,10,10, BLUE);
 
 
     EndMode2D();
+    std::string x = std::to_string((int)player.cage.x);
+    std::string y = std::to_string((int)player.cage.y);
+    std::string coor = x + "," + y;
+    const char* c = coor.c_str();
 
-    DrawText("SquareCraft", 40, 40, 40, LIGHTGRAY);
-
+    DrawText("Squarecraft", 40, 40, 40, LIGHTGRAY);
+    DrawText(c, screenWidth-200, 40, 40, LIGHTGRAY);
     EndDrawing();
 }
 
@@ -103,10 +123,11 @@ void initializer() {
 
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
-    player.pos = (Vector2){screenWidth/2, screenHeight/2};
+    player.cage.x = screenWidth/2;
+    player.cage.y = screenHeight/2;
 
     //camera init
-    camera.target = (Vector2){ player.pos.x + player.size.x/2, player.pos.y + player.size.y/2 };
+    camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;

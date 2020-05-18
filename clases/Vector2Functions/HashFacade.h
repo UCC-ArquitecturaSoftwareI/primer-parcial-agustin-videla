@@ -34,6 +34,11 @@ public:
         return false;
     }
 
+    Block* get(Vector2 key) {
+        key = vectorTransform(key);
+        return table.all()[Vector2Adaptor(key)];
+    }
+
     bool exists(Vector2 key) {
         key = vectorTransform(key);
         return table.all().find(Vector2Adaptor(key)) != table.all().end();

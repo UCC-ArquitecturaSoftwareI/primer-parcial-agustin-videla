@@ -22,7 +22,9 @@ add_executable(SquareCraft main.cpp
 		clases/Renderer/PlayerRenderer.h clases/Renderer/PlayerRenderer.cpp
 		clases/Vector2Functions/Vector2Hash.h clases/Vector2Functions/SingletonHash.h
 		clases/Vector2Functions/Vector2Adaptor.h clases/Vector2Functions/HashFacade.h
-		clases/Vector2Functions/VectorTransform.h clases/Vector2Functions/VectorTransform.cpp)
+		clases/Vector2Functions/VectorTransform.h clases/Vector2Functions/VectorTransform.cpp
+		clases/Player/Player.h clases/Player/Player.cpp
+		clases/Collisions/CollisionObserver.h)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${raylib_INCLUDE_DIRS})

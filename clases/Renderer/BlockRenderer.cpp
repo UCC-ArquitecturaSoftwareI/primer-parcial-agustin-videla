@@ -5,5 +5,5 @@
 #include "BlockRenderer.h"
 
 void BlockRenderer::render(Block *block) {
-    DrawRectangleV(block->getCoordinates(), block->getSize(), block->getColor());
+    DrawRectangleRec(block->getCage(), block->getColor());
 }
