@@ -15,6 +15,7 @@ protected:
     //Vector2 coordinates{};
     static Vector2 size;
     Rectangle cage; //todo debuggear colisiones
+    int Gid = 12;
 public:
     explicit Block(Vector2 xCoordinates);
     ~Block() { std::cout << "me rompi ahre" << '\n'; };
@@ -23,6 +24,7 @@ public:
     virtual  Rectangle getCage() { return cage; }
     static Vector2 getSize() { return size; }
     virtual Color getColor() { return texture; }
+    int getGid(){return Gid;}
 };
 
 #endif //RAYLIBTEMPLATE_BLOCK_H

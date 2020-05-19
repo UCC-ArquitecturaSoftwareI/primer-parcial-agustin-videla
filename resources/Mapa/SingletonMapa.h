@@ -41,6 +41,8 @@ private:
             for(auto &obj : objs->getObjects()){
                 //revisa todos los objetos
                 std::cout<<"Nombre: " << obj.getName() << std::endl;
+                std::cout<<map_tileset->getImage() << std::endl;
+
             }
             /*
             for(auto &lay : map.getLayers()){
@@ -59,6 +61,23 @@ public:
     }
     Texture2D getTexture(){
         return map_tex;
+    }
+    Rectangle getRec(int Gid){ //esta es la posicion y tamaño de la textura individual a dibujar
+        Rectangle tile_rec;
+
+        if(Gid == 12){
+            tile_rec.x = 192.0f;
+            tile_rec.y = 0.0f;
+        }
+        if(Gid == 460){
+            tile_rec.x = 192.0f;
+            tile_rec.y = 448.0f;
+        }
+        //tile_rec.x = (Gid * 16.0f);
+        //tile_rec.y = 0.0f;
+        tile_rec.width = map.getTileSize().x;
+        tile_rec.height = map.getTileSize().y;
+        return tile_rec;
     }
 };
 

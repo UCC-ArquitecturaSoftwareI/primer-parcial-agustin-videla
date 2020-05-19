@@ -10,7 +10,7 @@
 
 class Block_Dirt : public Block {
 public:
-    Block_Dirt(Vector2 xCoordinates) : Block(xCoordinates) { texture = BROWN; std::cout << "soy tierra lol" << '\n';}
+    Block_Dirt(Vector2 xCoordinates) : Block(xCoordinates) { texture = BROWN; Gid = 460;std::cout << "soy tierra lol" << '\n';}
 };
 
 #endif //RAYLIBTEMPLATE_BLOCK_DIRT_H
