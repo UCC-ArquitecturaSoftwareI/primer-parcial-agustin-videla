@@ -3,7 +3,10 @@
 //
 
 #include "BlockRenderer.h"
-
+#include "../../resources/Mapa/SingletonMapa.h"
 void BlockRenderer::render(Block *block) {
-    DrawRectangleRec(block->getCage(), block->getColor());
+    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap1.json");
+
+    //DrawRectangleRec(block->getCage(), block->getColor());
+    DrawTexture(mapa.getTexture(),block->getCage().x,block->getCage().y,WHITE);
 }

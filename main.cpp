@@ -6,6 +6,7 @@
 #include <vector>
 #include "clases/Vector2Functions/HashFacade.h"
 #include "clases/Collisions/CollisionObserver.h"
+#include "resources/Mapa/SingletonMapa.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -125,6 +126,8 @@ void initializer() {
     toolFactory = new ToolFactory;
     player.cage.x = screenWidth/2;
     player.cage.y = screenHeight/2;
+
+    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap1.json");
 
     //camera init
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
