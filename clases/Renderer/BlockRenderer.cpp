@@ -6,10 +6,8 @@
 #include "../../resources/Mapa/SingletonMapa.h"
 void BlockRenderer::render(Block *block) {
     SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap1.json");
-    //DrawRectangleRec(block->getCage(), block->getColor());
     Vector2 position = {block->getCage().x,block->getCage().y}; //posicion donde se dibujará el bloque
     DrawTextureRec(mapa.getTexture(), mapa.getRec(block->getGid()), position, WHITE);  // Draw part of the texture //mapa.getRec nos daría la posicion de la textura a recortar
-    //DrawTexture(mapa.getTexture(),block->getCage().x,block->getCage().y,WHITE);
 }
 
 /*

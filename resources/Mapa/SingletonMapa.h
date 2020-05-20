@@ -40,19 +40,21 @@ private:
 
             for(auto &obj : objs->getObjects()){
                 //revisa todos los objetos
-                std::cout<<"Nombre: " << obj.getName() << std::endl;
-                std::cout<<map_tileset->getImage() << std::endl;
-
             }
-            /*
-            for(auto &lay : map.getLayers()){
-                //std::cout<<"Nombre: " << lay.getName() << std::endl;
-                for(auto &[pos, tile] : lay.getTileData()){
-
-                }
-            }
-            */
         }
+
+    }
+    int getCol (int a, int b){
+        if(a < 17)
+            return a;
+        else
+            getCol (a - 16, b + 1);
+    }
+    int getRow(int a, int b){
+        if (a < 17)
+            return b;
+        else
+            getRow(a - 16, b + 1);
     }
 public:
     static SingletonMapa &getInstance(const std::string file){
@@ -65,16 +67,16 @@ public:
     Rectangle getRec(int Gid){ //esta es la posicion y tamaño de la textura individual a dibujar
         Rectangle tile_rec;
 
-        if(Gid == 12){
-            tile_rec.x = 192.0f;
+        if(Gid < 16)
+            tile_rec.x = (16.0f) * Gid;
+        else
+            tile_rec.x = (16.0f) * getCol(Gid, 0);
+
+        if(Gid < 16)
             tile_rec.y = 0.0f;
-        }
-        if(Gid == 460){
-            tile_rec.x = 192.0f;
-            tile_rec.y = 448.0f;
-        }
-        //tile_rec.x = (Gid * 16.0f);
-        //tile_rec.y = 0.0f;
+        else
+            tile_rec.y = (16.0f) * getRow(Gid, 0);
+
         tile_rec.width = map.getTileSize().x;
         tile_rec.height = map.getTileSize().y;
         return tile_rec;
