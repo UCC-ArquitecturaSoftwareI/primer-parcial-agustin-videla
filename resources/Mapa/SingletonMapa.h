@@ -44,18 +44,16 @@ private:
         }
 
     }
-    int getCol (int a, int b){
+    int getPos (int a, int b, char c){
         if(a < 17)
-            return a;
+            if(c == 'x')
+                return a;
+            else
+                return b;
         else
-            getCol (a - 16, b + 1);
+            getPos (a - 16, b + 1, c);
     }
-    int getRow(int a, int b){
-        if (a < 17)
-            return b;
-        else
-            getRow(a - 16, b + 1);
-    }
+
 public:
     static SingletonMapa &getInstance(const std::string file){
         static SingletonMapa mapa(file);
@@ -70,12 +68,12 @@ public:
         if(Gid < 16)
             tile_rec.x = (16.0f) * Gid;
         else
-            tile_rec.x = (16.0f) * getCol(Gid, 0);
+            tile_rec.x = (16.0f) * getPos(Gid, 0, 'x');
 
         if(Gid < 16)
             tile_rec.y = 0.0f;
         else
-            tile_rec.y = (16.0f) * getRow(Gid, 0);
+            tile_rec.y = (16.0f) * getPos(Gid, 0, 'y');
 
         tile_rec.width = map.getTileSize().x;
         tile_rec.height = map.getTileSize().y;
