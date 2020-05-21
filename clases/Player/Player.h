@@ -8,15 +8,16 @@
 #include <raylib.h>
 
 class Player {
-    Player() { cage.height = size.x; cage.width = size.y; }
+    Player();
     static Vector2 size;
 public:
-    Rectangle cage { }; //colision rectangle //todo debuggear colisiones
-    static Player& getInstance(){
-        static Player player;
-        return player;
-    }
-//    static Vector2 getSize() { return size; }
+    Rectangle cage { };
+
+    static Player& getInstance();
+
+    Vector2 getSize();
+
+    Vector2 getPos();
 };
 
 
