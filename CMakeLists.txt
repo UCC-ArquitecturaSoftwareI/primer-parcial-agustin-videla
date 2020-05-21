@@ -20,9 +20,10 @@ add_executable(SquareCraft main.cpp
         clases/Tools/ToolFactory.h
         clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
 		clases/Renderer/PlayerRenderer.h clases/Renderer/PlayerRenderer.cpp
-		clases/Vector2Functions/Vector2Hash.h clases/Vector2Functions/SingletonHash.h
+		clases/Vector2Functions/Vector2Hash.h clases/Vector2Functions/HashFacade.cpp clases/Vector2Functions/SingletonHash.h
 		clases/Vector2Functions/Vector2Adaptor.h clases/Vector2Functions/HashFacade.h
 		clases/Vector2Functions/VectorTransform.h clases/Vector2Functions/VectorTransform.cpp
+		clases/Vector2Functions/Vector2Adaptor.cpp
 		clases/Player/Player.h clases/Player/Player.cpp
 		clases/Collisions/CollisionObserver.h resources/Mapa/SingletonMapa.h)
 add_dependencies(${PROJECT_NAME} raylib)

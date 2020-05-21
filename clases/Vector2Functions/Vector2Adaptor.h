@@ -9,17 +9,15 @@
 
 /**
  * Adapta la insterfaz de Vector2 con el objetivo de usarlas como llave en SingletonHash
+ * Agrega el operador ==
  */
 class Vector2Adaptor {
 public:
-    Vector2Adaptor(Vector2 v){
-        vector.x = v.x;
-        vector.y = v.y;
-    }
+    Vector2Adaptor(Vector2 v);
+
     Vector2 vector{};
-    bool operator==(const Vector2Adaptor& v) const {
-        return vector.x == v.vector.x && vector.y == v.vector.y;
-    }
+
+    bool operator==(const Vector2Adaptor& v) const;
 };
 
 

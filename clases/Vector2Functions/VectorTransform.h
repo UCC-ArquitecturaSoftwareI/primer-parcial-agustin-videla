@@ -9,11 +9,6 @@
 #include "../Player/Player.h"
 #include "../Blocks/Block.h"
 
-/**
- * Recibe coordenadas en relación a la pantalla y las convierte para que estén en relación al jugador
- * @param v
- * @return
- */
 Vector2 vectorTransform(Vector2 v);
 
 #endif //SQUARECRAFT_VECTORTRANSFORM_H

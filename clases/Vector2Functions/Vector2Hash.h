@@ -9,11 +9,11 @@
 #include <string>
 #include "Vector2Adaptor.h"
 
+/**
+ * Función de Hash para vectores
+ */
 class Vector2Hash {
 public:
-    /*
-     * Funcion de Hash para vectores
-     */
     int operator()(const Vector2Adaptor v) const
     {
         return ((v.vector.x + v.vector.y)*(v.vector.x+v.vector.y+1))/2+v.vector.y;

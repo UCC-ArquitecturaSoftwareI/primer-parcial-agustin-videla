@@ -12,16 +12,16 @@
 /**
  * Genera una instancia única del hash para guardar bloques.
  */
-class   SingletonHash {
+class SingletonHash {
 private:
     std::unordered_map<Vector2Adaptor,Block*,Vector2Hash> table;
     SingletonHash(){};
 public:
-    static SingletonHash& getInstance(){
+    static SingletonHash& getInstance() {
         static SingletonHash hash;
         return hash;
     }
-    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash>& all(){
+    std::unordered_map<Vector2Adaptor,Block*,Vector2Hash>& all() {
         return table;
     }
 };
