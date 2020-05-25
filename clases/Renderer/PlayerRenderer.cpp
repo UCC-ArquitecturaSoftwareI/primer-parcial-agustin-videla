@@ -4,6 +4,10 @@
 
 #include "PlayerRenderer.h"
 
+/**
+ * Dibuja a player
+ * @param player
+ */
 void PlayerRenderer::render(Player *player) {
     DrawRectangleRec(player->cage, RED);
 }

@@ -12,19 +12,23 @@
 class Block {
 protected:
     Color texture{};
-    //Vector2 coordinates{};
     static Vector2 size;
-    Rectangle cage; //todo debuggear colisiones
+    Rectangle cage;
     int Gid = 12;
 public:
     explicit Block(Vector2 xCoordinates);
+
     ~Block() { std::cout << "me rompi ahre" << '\n'; };
-    //virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
-    //virtual Vector2 getCoordinates() { return coordinates; }
+
+    virtual Vector2 getPos() { return {cage.x,cage.y}; }
+
     virtual  Rectangle getCage() { return cage; }
+
     static Vector2 getSize() { return size; }
+
     virtual Color getColor() { return texture; }
-    int getGid(){return Gid;}
+
+    int getGid(){ return Gid;}
 };
 
 #endif //RAYLIBTEMPLATE_BLOCK_H
