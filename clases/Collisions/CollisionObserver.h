@@ -28,5 +28,4 @@ public:
     };
 };
 
-
 #endif //SQUARECRAFT_COLLISIONDETECTOR_H

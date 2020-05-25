@@ -4,13 +4,14 @@
 
 #include <raylib.h>
 #include <string>
-
+/*
+ *
+ */
 class Tool{
 
 protected:
     int damage{};
 public:
-   //virtual void draw() const = 0;
    virtual int getdamage() = 0;
 };
 

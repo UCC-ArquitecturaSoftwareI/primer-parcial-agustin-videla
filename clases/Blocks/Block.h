@@ -18,13 +18,13 @@ protected:
     int Gid = 12;
 public:
     explicit Block(Vector2 xCoordinates);
-    ~Block() { std::cout << "me rompi ahre" << '\n'; };
+    ~Block();
     //virtual void setCoordinates(Vector2 xCoordinates) { this->coordinates = xCoordinates; }
     //virtual Vector2 getCoordinates() { return coordinates; }
-    virtual  Rectangle getCage() { return cage; }
-    static Vector2 getSize() { return size; }
-    virtual Color getColor() { return texture; }
-    int getGid(){return Gid;}
+    virtual  Rectangle getCage();
+    static Vector2 getSize();
+    virtual Color getColor();
+    int getGid();
 };
 
 #endif //RAYLIBTEMPLATE_BLOCK_H

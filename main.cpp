@@ -91,7 +91,6 @@ static void UpdateDrawFrame(void) {
 
     // Comienzo a dibujar
     BeginDrawing();
-
     BeginMode2D(camera);
 
     ClearBackground(RAYWHITE); // Limpio la pantalla con blanco
@@ -128,7 +127,6 @@ void initializer() {
     player.cage.y = screenHeight/2;
 
     SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap1.json");
-
     //camera init
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
