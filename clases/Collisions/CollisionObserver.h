@@ -19,5 +19,4 @@ public:
     void checkCollision();
 };
 
-
 #endif //SQUARECRAFT_COLLISIONDETECTOR_H
