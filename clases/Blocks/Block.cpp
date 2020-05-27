@@ -29,3 +29,7 @@ Color Block::getColor()  {
 int Block::getGid() {
     return Gid;
 }
+
+Vector2 Block::getCoordinates() {
+    return {cage.x, cage. y};
+}
