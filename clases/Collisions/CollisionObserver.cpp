@@ -4,21 +4,24 @@
 //
 
 #include "CollisionObserver.h"
+#include <vector>
+#include "CollisionHandler.h"
 
 /**
  * Se fija en los bloques próximos a player para determinar si hay o no colisiones
  */
 void CollisionObserver::checkCollision() {
-    bool check = false;
     Hash hash;
+    CollisionHandler handler;
     Player &player = Player::getInstance();
     Vector2 position;
+    std::vector<int> colisiones;
     //arriba-izquierda
     position = toGrid({player.getPos().x-1, player.getPos().y-1});
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "arriba-izquierda";
-            check = true;
+            colisiones.push_back(0);
         }
     }
     //arriba
@@ -26,7 +29,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "arriba";
-            check = true;
+            colisiones.push_back(1);
         }
     }
     //arriba-derecha
@@ -34,7 +37,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)){
         if(CheckCollisionRecs(player.cage,hash.get(position)->getCage())){
             std::cout << "arriba-derecha";
-            check = true;
+            colisiones.push_back(2);
         }
     }
     //cabeza-derecha
@@ -42,7 +45,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "cabeza-derecha";
-            check = true;
+            colisiones.push_back(3);
         }
     }
     //pies-derecha
@@ -50,7 +53,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "pies-derecha";
-            check = true;
+            colisiones.push_back(4);
         }
     }
     //abajo-derecha
@@ -58,7 +61,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "abajo-derecha";
-            check = true;
+            colisiones.push_back(5);
         }
     }
     //abajo
@@ -66,7 +69,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "abajo";
-            check = true;
+            colisiones.push_back(6);
         }
     }
     //abajo-izquierda
@@ -74,7 +77,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "abajo-izquierda";
-            check = true;
+            colisiones.push_back(7);
         }
     }
     //pies-izquierda
@@ -82,7 +85,7 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "pies-izquierda";
-            check = true;
+            colisiones.push_back(8);
         }
     }
     //cabeza-izquierda
@@ -90,9 +93,8 @@ void CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             std::cout << "cabeza-izquierda";
-            check = true;
+            colisiones.push_back(9);
         }
     }
-
-    colides = check;
+    handler.handle(colisiones);
 }

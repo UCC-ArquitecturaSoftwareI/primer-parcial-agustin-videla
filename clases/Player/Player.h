@@ -11,6 +11,7 @@
 class Player {
     Player();
     static Vector2 size;
+    Vector2 speed;
 public:
     Rectangle cage { };
 
@@ -21,6 +22,10 @@ public:
     Vector2 getPos();
 
     Vector2 setPos(int x, int y);
+
+    Vector2 getSpeed();
+
+    void setSpeed(Vector2 v);
 };
 
 

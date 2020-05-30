@@ -12,8 +12,8 @@
 Vector2 mouseTransform(Vector2 v) {
     Player &player = Player::getInstance();
     //coloco el vector en relación al player
-    v = {player.getPos().x + v.x - GetScreenWidth()/2 + player.getSize().y/2,
-         player.getPos().y + v.y - GetScreenHeight()/2 + player.getSize().x/2};
+    v = {player.getPos().x + v.x - GetScreenWidth()/2 + player.getSize().x/2,
+         player.getPos().y + v.y - GetScreenHeight()/2 + player.getSize().y/2};
     return toGrid(v);
 }
 

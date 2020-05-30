@@ -66,10 +66,10 @@ static void UpdateDrawFrame(void) {
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
     // Verifico Entradas de eventos.
-    if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1;
-    else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 1;
-    if (IsKeyDown(KEY_UP)) player.cage.y -= 1;
-    else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1;
+    if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1*player.getSpeed().x;
+    else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 1*player.getSpeed().x;
+    if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
+    else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))

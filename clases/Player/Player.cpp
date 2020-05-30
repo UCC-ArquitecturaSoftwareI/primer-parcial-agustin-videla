@@ -8,6 +8,7 @@
 Player::Player() {
     cage.height = size.y;
     cage.width = size.x;
+    speed = {1,1};
 }
 
 /**
@@ -43,6 +44,14 @@ Vector2 Player::getPos() {
 Vector2  Player::setPos(int x, int y) {
     cage.x = x;
     cage.y = y;
+}
+
+Vector2 Player::getSpeed() {
+    return speed;
+}
+
+void Player::setSpeed(Vector2 v) {
+    speed = v;
 }
 
 
