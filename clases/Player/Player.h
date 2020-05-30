@@ -6,6 +6,7 @@
 #define SQUARECRAFT_PLAYER_H
 
 #include <raylib.h>
+#include "../Blocks/Block.h"
 
 class Player {
     Player();

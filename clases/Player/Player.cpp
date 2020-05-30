@@ -6,12 +6,14 @@
 
 
 Player::Player() {
-    cage.height = size.x;
-    cage.width = size.y;
+    cage.height = size.y;
+    cage.width = size.x;
 }
 
-//x es la altura e y el ancho para ser consistente con los parámetros de cage
-Vector2 Player::size = { 80, 40};
+/**
+ * x = width, y = height
+ */
+Vector2 Player::size = {Block::getSize().x, Block::getSize().y*2};
 
 /**
  * Devuelve una instancia única de player
