@@ -7,6 +7,7 @@
 #include "clases/Vector2Functions/HashFacade.h"
 #include "clases/Collisions/CollisionObserver.h"
 #include "resources/Mapa/SingletonMapa.h"
+#include "clases/Vector2Functions/VectorTransform.h"
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
@@ -71,23 +72,23 @@ static void UpdateDrawFrame(void) {
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         if(!hash.exists(GetMousePosition()))
-            hash.put(GetMousePosition(), factory->create("iron", 1, GetMousePosition()));
+            hash.put(vectorTransform(GetMousePosition()), factory->create("iron", 1, GetMousePosition()));
     if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
         if(!hash.exists(GetMousePosition()))
-            hash.put(GetMousePosition(), factory->create("dirt", 1, GetMousePosition()));
-    if(IsKeyPressed(KEY_SPACE))
-        hash.remove(GetMousePosition());
+            hash.put(vectorTransform(GetMousePosition()), factory->create("Tierra", 1, GetMousePosition()));
+    if(IsKeyDown(KEY_SPACE))
+        hash.remove(vectorTransform(GetMousePosition()));
     if(IsKeyPressed(KEY_R)) {
+
+        std::cout << player.getPos().x << "" << player.getPos().y << "\n";
         std::cout << hash.get(GetMousePosition())->getCage().x << "," << hash.get(GetMousePosition())->getCage().y << '\n';
     }
 
     //La camara sigue al jugador
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
 
+    //checkeo colisiones
     botonazo.checkCollision();
-    if(botonazo.colides) {
-        std::cout << "ouch" << '\n';
-    }
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -110,6 +111,7 @@ static void UpdateDrawFrame(void) {
     const char* c = coor.c_str();
 
     DrawText("Squarecraft", 40, 40, 40, LIGHTGRAY);
+
     DrawText(c, screenWidth-200, 40, 40, LIGHTGRAY);
     EndDrawing();
 }
@@ -126,11 +128,10 @@ void initializer() {
     player.cage.x = screenWidth/2;
     player.cage.y = screenHeight/2;
 
-    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap1.json");
+    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
     //camera init
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 }
-

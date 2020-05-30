@@ -40,9 +40,10 @@ bool Hash::remove(Vector2 key) {
  * @return
  */
 Block *Hash::get(Vector2 key) {
-    key = vectorTransform(key);
+    //key = vectorTransform(key);
     return table.all()[Vector2Adaptor(key)];
 }
+
 
 /**
  * Chequea si existe un bloque en la tabla de hash
@@ -50,6 +51,7 @@ Block *Hash::get(Vector2 key) {
  * @return
  */
 bool Hash::exists(Vector2 key) {
-    key = vectorTransform(key);
+    //key = vectorTransform(key);
     return table.all().find(Vector2Adaptor(key)) != table.all().end();
 }
+

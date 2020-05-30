@@ -38,5 +38,10 @@ Vector2 Player::getPos() {
     return {cage.x,cage.y};
 }
 
+Vector2  Player::setPos(int x, int y) {
+    cage.x = x;
+    cage.y = y;
+}
+
 
 

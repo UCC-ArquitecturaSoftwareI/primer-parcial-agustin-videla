@@ -18,6 +18,8 @@ public:
     Vector2 getSize();
 
     Vector2 getPos();
+
+    Vector2 setPos(int x, int y);
 };
 
 

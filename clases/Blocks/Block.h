@@ -28,6 +28,8 @@ public:
 
     virtual Color getColor();
 
+    void setGid();
+
     int getGid();
 };
 

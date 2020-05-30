@@ -9,15 +9,23 @@
  * Se fija en los bloques próximos a player para determinar si hay o no colisiones
  */
 void CollisionObserver::checkCollision() {
+
     bool check = false;
     Player &player = Player::getInstance();
     Hash hash;
     //arriba
-    if(hash.exists({player.cage.x,player.cage.y-1})){
+    if(hash.exists(player.getPos())){
+        hash.get(player.getPos())->setGid();
 
-        if(CheckCollisionRecs(player.cage,hash.get({player.cage.x,player.cage.y-1})->getCage()))
-            std::cout << "me choqué";
+        std::cout<< player.getPos().x << player.getPos().y << "\n";
+        if(CheckCollisionRecs(player.cage,hash.get({player.cage.x,player.cage.y})->getCage())){
+            std::cout << "me choqué \n";
+            check = true;
+
     }
+        std::cout<<"fuck \n";
+    }
+
     colides = check;
 }
 

@@ -30,6 +30,8 @@ int Block::getGid() {
     return Gid;
 }
 
+void Block::setGid() { Gid = 20;}
+
 Vector2 Block::getCoordinates() {
     return {cage.x, cage. y};
 }

@@ -9,9 +9,11 @@
  */
 SingletonMapa::SingletonMapa(const std::string file){
 
+    Player &Player = Player::getInstance();
+
     tson::Tileson parser;
     //tson::Map map = parser.parse(fs::path("../resources/Mapa/EntitledMap1.json"));
-    map = parser.parse("../resources/Mapa/EntitledMap1.json");
+    map = parser.parse("../resources/Mapa/EntitledMap2.json");
     if(map.getStatus() == tson::ParseStatus::OK) {
         for (auto &tileset : map.getTilesets()){
             map_tex = LoadTexture("../resources/Mapa/totatilly-not-minecraft-textures.png");
@@ -20,15 +22,18 @@ SingletonMapa::SingletonMapa(const std::string file){
         }
 
         auto objs = map.getLayer("Objetos"); //obtengo la capa Objetos
-        //tson::Object *player = objs->firstObj("Player"); //obtengo los datos del jugador
+        //tson::Object *player = objs->firstObj("player"); //obtengo los datos del jugador
         ///cargo la posicion inicial del jugador
-        //player_init_pos.x = player->getPosition().x;
-        //player_init_pos.y = player->getPosition().y;
+        //Player.setPos(player->getPosition().x, player->getPosition().y);
+        //std::cout<<"posicion inicial del jugador: " << player->getPosition().x << " " << player->getPosition().y << "\n";
 
         for(auto &obj : objs->getObjects()){
+
             //revisa todos los objetos
-            if(obj.getName() == "Tierra")
-                HDP.put({(float)obj.getPosition().x, (float)obj.getPosition().y}, FactoreameEsta->create(obj.getName(), 1, {(float)obj.getPosition().x, (float)obj.getPosition().y}));
+            if(obj.getType() == "Tierra")
+                HDP.put({(float)obj.getPosition().x, (float)obj.getPosition().y}, FactoreameEsta->create(obj.getType(), 1, {(float)obj.getPosition().x, (float)obj.getPosition().y}));
+            if(obj.getType() == "iron")
+                HDP.put({(float)obj.getPosition().x, (float)obj.getPosition().y}, FactoreameEsta->create(obj.getType(), 1, {(float)obj.getPosition().x, (float)obj.getPosition().y}));
         }
     }
 }
@@ -42,7 +47,7 @@ SingletonMapa::SingletonMapa(const std::string file){
 int  SingletonMapa::getPos(int a, int b, char c) {
     if(a < 17) {
         if (c == 'x')
-            return a;
+            return a - 1;
         if (c == 'y')
             return b;
         //debería de tirar una excepción? yo creo que no
