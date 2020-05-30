@@ -14,11 +14,11 @@ void CollisionObserver::checkCollision() {
     Player &player = Player::getInstance();
     Hash hash;
     //arriba
-    if(hash.exists(player.getPos())){
-        hash.get(player.getPos())->setGid();
+    if(hash.exists(toGrid(player.getPos()))){
+        hash.get(toGrid(player.getPos()))->setGid();
 
-        std::cout<< player.getPos().x << player.getPos().y << "\n";
-        if(CheckCollisionRecs(player.cage,hash.get({player.cage.x,player.cage.y})->getCage())){
+//        std::cout<< player.getPos().x << player.getPos().y << "\n";
+        if(CheckCollisionRecs(player.cage,hash.get(toGrid(player.getPos()))->getCage())){
             std::cout << "me choqué \n";
             check = true;
 

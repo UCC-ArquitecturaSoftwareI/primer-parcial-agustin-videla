@@ -9,7 +9,9 @@
 #include "../Player/Player.h"
 #include "../Blocks/Block.h"
 
-Vector2 vectorTransform(Vector2 v);
+Vector2 mouseTransform(Vector2 v);
+
+Vector2 toGrid(Vector2 v);
 
 #endif //SQUARECRAFT_VECTORTRANSFORM_H
 

@@ -13,7 +13,6 @@
  * @return
  */
  Block* BlockFactory::create(std::string element, int type, Vector2 xCoordinates) {
-     xCoordinates = vectorTransform(xCoordinates);
      if(element == "Tierra")
          if(type == 1)  return new Block_Dirt(xCoordinates);
 

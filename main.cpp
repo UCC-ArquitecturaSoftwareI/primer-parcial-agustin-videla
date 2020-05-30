@@ -63,6 +63,8 @@ static void UpdateDrawFrame(void) {
 
     //UpdateMusicStream(music); //la saqué porque me cansó
 
+    Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
+
     // Verifico Entradas de eventos.
     if (IsKeyDown(KEY_RIGHT)) player.cage.x += 5;
     else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 5;
@@ -71,21 +73,17 @@ static void UpdateDrawFrame(void) {
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        if(!hash.exists(GetMousePosition()))
-            hash.put(vectorTransform(GetMousePosition()), factory->create("iron", 1, GetMousePosition()));
-    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
-        if(!hash.exists(GetMousePosition()))
-            hash.put(vectorTransform(GetMousePosition()), factory->create("Tierra", 1, GetMousePosition()));
-    if(IsKeyDown(KEY_SPACE))
-        hash.remove(vectorTransform(GetMousePosition()));
-    if(IsKeyPressed(KEY_R)) {
-
-        std::cout << player.getPos().x << "" << player.getPos().y << "\n";
-        std::cout << hash.get(GetMousePosition())->getCage().x << "," << hash.get(GetMousePosition())->getCage().y << '\n';
+        if (!hash.exists(mousePosition))
+            hash.put(mousePosition, factory->create("iron", 1, mousePosition));
+    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
+        if (!hash.exists(mousePosition))
+            hash.put(mousePosition, factory->create("Tierra", 1, mousePosition));
     }
+    if(IsKeyDown(KEY_SPACE))
+        hash.remove(mousePosition);
 
     //La camara sigue al jugador
-    camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
+    camera.target = (Vector2){ player.getPos().x + player.cage.width/2, player.getPos().y + player.cage.height/2 };
 
     //checkeo colisiones
     botonazo.checkCollision();
@@ -101,12 +99,12 @@ static void UpdateDrawFrame(void) {
     }
 
     playerRenderer->render(&player);
-    DrawRectangle(player.cage.x, player.cage.y,10,10, BLUE);
+    DrawRectangle(player.getPos().x, player.getPos().y,10,10, BLUE);
 
 
     EndMode2D();
-    std::string x = std::to_string((int)player.cage.x);
-    std::string y = std::to_string((int)player.cage.y);
+    std::string x = std::to_string((int)player.getPos().x);
+    std::string y = std::to_string((int)player.getPos().y);
     std::string coor = x + "," + y;
     const char* c = coor.c_str();
 

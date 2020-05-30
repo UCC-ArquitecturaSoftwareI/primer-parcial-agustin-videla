@@ -11,7 +11,6 @@
  * @return
  */
 bool Hash::put(Vector2 key, Block *block) {
-    key = vectorTransform(key);
     if (table.all().find(Vector2Adaptor(key)) == table.all().end()) {
         table.all()[Vector2Adaptor(key)] = block;
         return true;
@@ -25,7 +24,6 @@ bool Hash::put(Vector2 key, Block *block) {
  * @return
  */
 bool Hash::remove(Vector2 key) {
-    key = vectorTransform(key);
     if (table.all().find(Vector2Adaptor(key)) != table.all().end()) {
         table.all()[Vector2Adaptor(key)]->~Block();
         table.all().erase(Vector2Adaptor(key));
@@ -40,7 +38,6 @@ bool Hash::remove(Vector2 key) {
  * @return
  */
 Block *Hash::get(Vector2 key) {
-    //key = vectorTransform(key);
     return table.all()[Vector2Adaptor(key)];
 }
 
@@ -51,7 +48,6 @@ Block *Hash::get(Vector2 key) {
  * @return
  */
 bool Hash::exists(Vector2 key) {
-    //key = vectorTransform(key);
     return table.all().find(Vector2Adaptor(key)) != table.all().end();
 }
 

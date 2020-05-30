@@ -2,6 +2,7 @@
 // Created by ribet on 25/5/2020.
 //
 #include "SingletonMapa.h"
+#include "../../clases/Vector2Functions/VectorTransform.h"
 
 /**
  * intialize all the data contained in the Json and load it into the correspondent place
@@ -28,12 +29,12 @@ SingletonMapa::SingletonMapa(const std::string file){
         //std::cout<<"posicion inicial del jugador: " << player->getPosition().x << " " << player->getPosition().y << "\n";
 
         for(auto &obj : objs->getObjects()){
-
             //revisa todos los objetos
+            Vector2 position = mouseTransform({(float)obj.getPosition().x, (float)obj.getPosition().y});
             if(obj.getType() == "Tierra")
-                HDP.put({(float)obj.getPosition().x, (float)obj.getPosition().y}, FactoreameEsta->create(obj.getType(), 1, {(float)obj.getPosition().x, (float)obj.getPosition().y}));
+                HDP.put(position, FactoreameEsta->create(obj.getType(), 1, position));
             if(obj.getType() == "iron")
-                HDP.put({(float)obj.getPosition().x, (float)obj.getPosition().y}, FactoreameEsta->create(obj.getType(), 1, {(float)obj.getPosition().x, (float)obj.getPosition().y}));
+                HDP.put(position, FactoreameEsta->create(obj.getType(), 1, position));
         }
     }
 }
