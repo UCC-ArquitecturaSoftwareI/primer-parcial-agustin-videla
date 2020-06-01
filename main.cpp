@@ -9,6 +9,7 @@
 #include "resources/Mapa/SingletonMapa.h"
 #include "clases/Vector2Functions/VectorTransform.h"
 
+
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
 #endif
@@ -65,11 +66,19 @@ static void UpdateDrawFrame(void) {
 
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
-    // Verifico Entradas de eventos.
-    if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1*player.getSpeed().x;
-    else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 1*player.getSpeed().x;
-    if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
-    else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
+    //checkeo colisiones
+    botonazo.checkCollision();
+
+
+
+        // Verifico Entradas de eventos.
+        if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1*player.getSpeed().x;
+        else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 1*player.getSpeed().x;
+        if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
+        else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
+
+
+
 
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -85,8 +94,8 @@ static void UpdateDrawFrame(void) {
     //La camara sigue al jugador
     camera.target = (Vector2){ player.getPos().x + player.cage.width/2, player.getPos().y + player.cage.height/2 };
 
-    //checkeo colisiones
-    botonazo.checkCollision();
+
+
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -99,7 +108,7 @@ static void UpdateDrawFrame(void) {
     }
 
     playerRenderer->render(&player);
-    DrawRectangle(player.getPos().x, player.getPos().y,10,10, BLUE);
+    //DrawRectangle(player.getPos().x, player.getPos().y,10,10, BLUE);
 
 
     EndMode2D();

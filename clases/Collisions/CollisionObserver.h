@@ -16,6 +16,14 @@ public:
 
     bool colides;
 
+    bool arriba;
+
+    bool  abajo;
+
+    bool izquierda;
+
+    bool derecha;
+
     void checkCollision();
 };
 

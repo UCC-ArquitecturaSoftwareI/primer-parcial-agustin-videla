@@ -18,8 +18,8 @@
  */
 class SingletonMapa {
 private:
-    Hash HDP;
-    BlockFactory* FactoreameEsta;
+    Hash hash;
+    BlockFactory* factory;
     tson::Map map;
     Texture2D map_tex;
     tson::Tileset *map_tileset;

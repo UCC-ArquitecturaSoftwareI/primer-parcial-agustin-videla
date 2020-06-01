@@ -32,9 +32,9 @@ SingletonMapa::SingletonMapa(const std::string file){
             //revisa todos los objetos
             Vector2 position = mouseTransform({(float)obj.getPosition().x, (float)obj.getPosition().y});
             if(obj.getType() == "Tierra")
-                HDP.put(position, FactoreameEsta->create(obj.getType(), 1, position));
+                hash.put(position, factory->create(obj.getType(), 1, position));
             if(obj.getType() == "iron")
-                HDP.put(position, FactoreameEsta->create(obj.getType(), 1, position));
+                hash.put(position, factory->create(obj.getType(), 1, position));
         }
     }
 }
@@ -51,6 +51,7 @@ int  SingletonMapa::getPos(int a, int b, char c) {
             return a - 1;
         if (c == 'y')
             return b;
+        return 0;
         //debería de tirar una excepción? yo creo que no
     }
     else
