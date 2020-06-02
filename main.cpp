@@ -63,6 +63,9 @@ static void UpdateDrawFrame(void) {
 
     //UpdateMusicStream(music); //la saqué porque me cansó
 
+    //checkeo colisiones
+    botonazo.checkCollision();
+
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
     // Verifico Entradas de eventos.
@@ -85,8 +88,7 @@ static void UpdateDrawFrame(void) {
     //La camara sigue al jugador
     camera.target = (Vector2){ player.getPos().x + player.cage.width/2, player.getPos().y + player.cage.height/2 };
 
-    //checkeo colisiones
-    botonazo.checkCollision();
+
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -97,9 +99,8 @@ static void UpdateDrawFrame(void) {
     for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
     }
-
     playerRenderer->render(&player);
-    DrawRectangle(player.getPos().x, player.getPos().y,10,10, BLUE);
+
 
 
     EndMode2D();

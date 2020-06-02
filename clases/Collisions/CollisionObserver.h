@@ -14,8 +14,6 @@ class CollisionObserver {
 public:
     CollisionObserver() = default;
 
-    bool colides;
-
     void checkCollision();
 };
 

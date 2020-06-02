@@ -6,11 +6,15 @@
 #define SQUARECRAFT_COLLISIONHANDLER_H
 
 #include <vector>
+#include "../Vector2Functions/VectorTransform.h"
 
 class CollisionHandler {
 public:
     CollisionHandler() { };
-    void handle(std::vector<int> c);
+
+    bool colides;
+
+    void handle(const std::vector<int>& c);
 };
 
 

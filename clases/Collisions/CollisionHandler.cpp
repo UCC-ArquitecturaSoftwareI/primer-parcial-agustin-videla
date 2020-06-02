@@ -3,37 +3,55 @@
 //
 
 #include "CollisionHandler.h"
-#include "../Player/Player.h"
 
-void CollisionHandler::handle(std::vector<int> c) {
+void CollisionHandler::handle(const std::vector<int>& c) {
     Player &player = Player::getInstance();
     for (auto i : c) {
         switch (i) {
-            //arriba-izquierda
-            case 0:
-                player.setSpeed({0,0});
-            case 1:
-                player.setSpeed({0,0});
-            case 2:
-                player.setSpeed({0,0});
-            case 3:
-                player.setSpeed({0,0});
-            case 4:
-                player.setSpeed({0,0});
-            case 5:
-                player.setSpeed({0,0});
-            case 6:
-                player.setSpeed({0,0});
-            case 7:
-                player.setSpeed({0,0});
-            case 8:
-                player.setSpeed({0,0});
-            case 9:
-                player.setSpeed({0,0});
-            default:
-                player.setSpeed({1,1});
+            case 0: //arriba-izquierda
+                if((toGrid(player.getPos()).x - player.getPos().x) > (toGrid(player.getPos()).y - player.getPos().y))
+                    player.cage.x += player.getSpeed().x;
+                else
+                    player.cage.y += player.getSpeed().y;
                 break;
-
+            case 1: //arriba
+                player.cage.y += player.getSpeed().y;
+                break;
+            case 2: //arriba-derecha
+                if((toGrid(player.getPos()).x - player.getPos().x) > (toGrid(player.getPos()).y - player.getPos().y))
+                    player.cage.x -= player.getSpeed().x;
+                else
+                    player.cage.y += player.getSpeed().y;
+                break;
+            case 3: //cabeza-derecha
+                player.cage.x -= player.getSpeed().x;
+                break;
+            case 4: //pies-derecha
+                player.cage.x -= player.getSpeed().x;
+                break;
+            case 5: //abajo-derecha
+                if((toGrid(player.getPos()).x - player.getPos().x) > (toGrid(player.getPos()).y - player.getPos().y))
+                    player.cage.x -= player.getSpeed().x;
+                else
+                    player.cage.y -= player.getSpeed().y;
+                break;
+            case 6: //abajo
+                player.cage.y -= player.getSpeed().y;
+                break;
+            case 7: //abajo-izquierda
+                if((toGrid(player.getPos()).x - player.getPos().x) > (toGrid(player.getPos()).y - player.getPos().y))
+                    player.cage.x += player.getSpeed().x;
+                else
+                    player.cage.y -= player.getSpeed().y;
+                break;
+            case 8: //pies-izquierda
+                player.cage.x += player.getSpeed().x;
+                break;
+            case 9: //cabeza-izquierda
+                player.cage.x += player.getSpeed().x;
+                break;
+            default:
+                break;
         }
     }
 }
