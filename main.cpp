@@ -68,6 +68,9 @@ static void UpdateDrawFrame(void) {
     //checkeo colisiones
     if(botonazo.checkCollision()){
         player.setPos(player.getBack());
+    } else {
+        if(!IsKeyDown(KEY_UP))
+        player.cage.y += 1*player.getSpeed().y;
     }
 
         // Verifico Entradas de eventos.
