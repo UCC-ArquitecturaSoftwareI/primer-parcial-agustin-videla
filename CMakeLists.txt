@@ -26,7 +26,6 @@ add_executable(SquareCraft main.cpp
 		clases/Vector2Functions/Vector2Adaptor.cpp
 		clases/Player/Player.h clases/Player/Player.cpp
 		clases/Collisions/CollisionObserver.h clases/Collisions/CollisionObserver.cpp
-		clases/Collisions/CollisionHandler.h clases/Collisions/CollisionHandler.cpp
 		resources/Mapa/SingletonMapa.h resources/Mapa/SingletonMapa.cpp)
 add_dependencies(${PROJECT_NAME} raylib)
 target_link_libraries(${PROJECT_NAME} ${raylib_LDFLAGS})

@@ -34,6 +34,7 @@ static void UpdateDrawFrame();          // Función dedicada a operar cada frame
 
 int main() {
 
+
     initializer();
 
     #if defined(PLATFORM_WEB)  // Para versión Web.
@@ -46,9 +47,7 @@ int main() {
     }
 #endif
 
-
     // Descargar todos los resources cargados
-
     UnloadMusicStream(music);   // Descargo la musica de RAM
     CloseAudioDevice();         // Cierro el dispositivo de Audio
     CloseWindow();              // Cierro la ventana
@@ -67,9 +66,9 @@ static void UpdateDrawFrame(void) {
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
     //checkeo colisiones
-    botonazo.checkCollision();
-
-
+    if(botonazo.checkCollision()){
+        player.setPos(player.getBack());
+    }
 
         // Verifico Entradas de eventos.
         if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1*player.getSpeed().x;
@@ -78,24 +77,18 @@ static void UpdateDrawFrame(void) {
         else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
 
 
-
-
-
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         if (!hash.exists(mousePosition))
             hash.put(mousePosition, factory->create("iron", 1, mousePosition));
     if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
         if (!hash.exists(mousePosition))
-            hash.put(mousePosition, factory->create("Tierra", 1, mousePosition));
+                hash.put(mousePosition, factory->create("Tierra", 1, mousePosition));
     }
     if(IsKeyDown(KEY_SPACE))
         hash.remove(mousePosition);
 
     //La camara sigue al jugador
     camera.target = (Vector2){ player.getPos().x + player.cage.width/2, player.getPos().y + player.cage.height/2 };
-
-
-
 
     // Comienzo a dibujar
     BeginDrawing();
@@ -105,10 +98,17 @@ static void UpdateDrawFrame(void) {
     // Dibujo todos los elementos del juego.
     for(auto i : hash.table.all()) {
         blockRenderer->render(i.second);
+        //check *-+/colision
+        if(CheckCollisionRecs(i.second->getCage(), player.cage)){
+            std::cout<<"mama choque\n";
+            player.setPos(player.getBack());
+        }
     }
 
     playerRenderer->render(&player);
-    //DrawRectangle(player.getPos().x, player.getPos().y,10,10, BLUE);
+
+    //Guardo la posicion actual del bloque para futura colisión
+    player.setBack();
 
 
     EndMode2D();
@@ -129,12 +129,12 @@ void initializer() {
     InitAudioDevice();
     music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
     PlayMusicStream(music);
-
+    //fabricate everything we need
     factory = new BlockFactory;
     toolFactory = new ToolFactory;
     player.cage.x = screenWidth/2;
     player.cage.y = screenHeight/2;
-
+    //Load map data
     SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
     //camera init
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };

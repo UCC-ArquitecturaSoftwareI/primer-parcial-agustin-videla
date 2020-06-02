@@ -16,15 +16,7 @@ public:
 
     bool colides;
 
-    bool arriba;
-
-    bool  abajo;
-
-    bool izquierda;
-
-    bool derecha;
-
-    void checkCollision();
+    bool checkCollision();
 };
 
 #endif //SQUARECRAFT_COLLISIONDETECTOR_H

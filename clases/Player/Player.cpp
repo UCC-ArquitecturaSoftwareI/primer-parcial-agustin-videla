@@ -41,13 +41,29 @@ Vector2 Player::getPos() {
     return {cage.x,cage.y};
 }
 
-Vector2  Player::setPos(int x, int y) {
-    cage.x = x;
-    cage.y = y;
-}
-
 Vector2 Player::getSpeed() {
     return speed;
+}
+/**
+ * Returns the previous position of player
+ * @return
+ */
+Vector2 Player::getBack() {
+    return back;
+}
+/**
+ * set the position
+ * @param pos
+ */
+void Player::setPos(Vector2 pos) {
+    cage.x = pos.x;
+    cage.y = pos.y;
+}
+/**
+ * sets the previous position
+ */
+void Player::setBack() {
+    back = getPos();
 }
 
 void Player::setSpeed(Vector2 v) {
