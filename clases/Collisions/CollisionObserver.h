@@ -16,6 +16,8 @@ public:
 
     bool colides;
 
+    bool abajo;
+
     bool checkCollision();
 };
 

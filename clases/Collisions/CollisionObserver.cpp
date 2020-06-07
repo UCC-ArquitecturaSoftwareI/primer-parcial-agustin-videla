@@ -15,6 +15,7 @@ bool CollisionObserver::checkCollision() {
     Vector2 position;
     std::vector<int> colisiones;
     colides = false;
+    abajo = false;
 
     /*               0   1   2
      *               9  ***  3
@@ -70,6 +71,11 @@ bool CollisionObserver::checkCollision() {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             colides = true;
         }
+    }
+    //abajo - gravity
+    position = toGrid({player.getPos().x, player.getPos().y+player.getSize().y+2});
+    if(hash.exists(position)) {
+            abajo = true;
     }
     //abajo-izquierda
     position = toGrid({player.getPos().x-1, player.getPos().y+player.getSize().y/2+1});

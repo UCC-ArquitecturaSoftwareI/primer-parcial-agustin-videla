@@ -27,13 +27,13 @@ Hash hash;
 std::vector<Tool*> tools;
 Camera2D camera;
 CollisionObserver botonazo;
-
+std::string element = "Tierra"; //para crear bloques con el inventario
 
 void initializer();
 static void UpdateDrawFrame();          // Función dedicada a operar cada frame
+void renderInventario();
 
 int main() {
-
 
     initializer();
 
@@ -69,8 +69,8 @@ static void UpdateDrawFrame(void) {
     if(botonazo.checkCollision()){
         player.setPos(player.getBack());
     } else {
-        if(!IsKeyDown(KEY_UP))
-        player.cage.y += 1*player.getSpeed().y;
+        if(!IsKeyDown(KEY_UP) && !botonazo.abajo)
+            player.cage.y += 1*player.getSpeed().y;
     }
 
         // Verifico Entradas de eventos.
@@ -82,11 +82,17 @@ static void UpdateDrawFrame(void) {
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         if (!hash.exists(mousePosition))
-            hash.put(mousePosition, factory->create("iron", 1, mousePosition));
-    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
-        if (!hash.exists(mousePosition))
-                hash.put(mousePosition, factory->create("Tierra", 1, mousePosition));
+            hash.put(mousePosition, factory->create(element, 1, mousePosition));
+
+    //cambiar el tipo de bloque a crear según la posicion del mouse
+    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
+        if(GetMousePosition().x > 60 && GetMousePosition().x < 76 && GetMousePosition().y > 410 && GetMousePosition().y < 426 )
+            element = "iron";
+        if(GetMousePosition().x > 81 && GetMousePosition().x < 104 && GetMousePosition().y > 410 && GetMousePosition().y < 426 )
+            element = "Tierra";
     }
+
+
     if(IsKeyDown(KEY_SPACE))
         hash.remove(mousePosition);
 
@@ -103,7 +109,6 @@ static void UpdateDrawFrame(void) {
         blockRenderer->render(i.second);
         //check *-+/colision
         if(CheckCollisionRecs(i.second->getCage(), player.cage)){
-            std::cout<<"mama choque\n";
             player.setPos(player.getBack());
         }
     }
@@ -121,8 +126,16 @@ static void UpdateDrawFrame(void) {
     const char* c = coor.c_str();
 
     DrawText("Squarecraft", 40, 40, 40, LIGHTGRAY);
-
     DrawText(c, screenWidth-200, 40, 40, LIGHTGRAY);
+
+     x = std::to_string((int)GetMousePosition().x);
+     y = std::to_string((int)GetMousePosition().y);
+     coor = x + "," + y;
+    c = coor.c_str();
+    DrawText(c, screenWidth-200, 90, 40, LIGHTGRAY);
+
+    renderInventario();
+
     EndDrawing();
 }
 
@@ -144,4 +157,20 @@ void initializer() {
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+}
+void renderInventario(){
+
+    DrawRectangleRec({50,400,700,45}, BROWN);
+    DrawRectangleRec({55,405,690,35}, LIGHTGRAY);
+
+    //load inventory data
+    int Bloques[3] = {12,461,640};
+
+    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
+    Vector2 position = {60, 410}; //posicion donde se dibujará el bloque
+    for(int i = 0; i < 3; i++){
+        DrawTextureRec(mapa.getTexture(), mapa.getRec(Bloques[i]), position, WHITE);
+        DrawText("64",position.x+2,431,3,BLACK);
+        position.x+=23;
+    }
 }
