@@ -23,18 +23,11 @@ SingletonMapa::SingletonMapa(const std::string file){
         }
 
         auto objs = map.getLayer("Objetos"); //obtengo la capa Objetos
-        //tson::Object *player = objs->firstObj("player"); //obtengo los datos del jugador
-        ///cargo la posicion inicial del jugador
-        //Player.setPos(player->getPosition().x, player->getPosition().y);
-        //std::cout<<"posicion inicial del jugador: " << player->getPosition().x << " " << player->getPosition().y << "\n";
 
         for(auto &obj : objs->getObjects()){
             //revisa todos los objetos
             Vector2 position = mouseTransform({(float)obj.getPosition().x, (float)obj.getPosition().y});
-            if(obj.getType() == "Tierra")
-                hash.put(position, factory->create(obj.getType(), 1, position));
-            if(obj.getType() == "iron")
-                hash.put(position, factory->create(obj.getType(), 1, position));
+            hash.put(position, factory->create(obj.getType(), obj.getName(), position));
         }
     }
 }

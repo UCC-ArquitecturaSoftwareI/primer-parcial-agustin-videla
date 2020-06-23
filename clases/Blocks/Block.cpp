@@ -6,7 +6,7 @@
 
 Vector2 Block::size = {16,16};
 
-Block::Block(Vector2 xCoordinates) {
+Block::Block(Vector2 xCoordinates, std::string type) {
     cage = {xCoordinates.x, xCoordinates.y, size.x, size.y};
 }
 
@@ -22,16 +22,6 @@ Vector2 Block::getSize()  {
     return size;
 }
 
-Color Block::getColor()  {
-    return texture;
-}
-
 int Block::getGid() {
     return Gid;
-}
-
-void Block::setGid() { Gid = 20;}
-
-Vector2 Block::getCoordinates() {
-    return {cage.x, cage. y};
 }

@@ -27,8 +27,9 @@ Hash hash;
 std::vector<Tool*> tools;
 Camera2D camera;
 CollisionObserver botonazo;
-std::string element = "Tierra"; //para crear bloques con el inventario
-
+//crear un inventario y meter esto ahí
+std::string element = "dirt"; //para crear bloques con el inventario
+std::string type = "0";
 void initializer();
 static void UpdateDrawFrame();          // Función dedicada a operar cada frame
 void renderInventario();
@@ -59,7 +60,7 @@ int main() {
  *  Función dedicada a dibujar cada frame. Acá adentro se debe poner la logica necesaria para representar un nuevo frame
  *  del juego.
  */
-static void UpdateDrawFrame(void) {
+static void UpdateDrawFrame() {
 
     //UpdateMusicStream(music); //la saqué porque me cansó
 
@@ -79,17 +80,20 @@ static void UpdateDrawFrame(void) {
         if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
         else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
 
-
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         if (!hash.exists(mousePosition))
-            hash.put(mousePosition, factory->create(element, 1, mousePosition));
+            hash.put(mousePosition, factory->create(element, "1", mousePosition));
 
     //cambiar el tipo de bloque a crear según la posicion del mouse
     if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
-        if(GetMousePosition().x > 60 && GetMousePosition().x < 76 && GetMousePosition().y > 410 && GetMousePosition().y < 426 )
+        if(GetMousePosition().x > 60 && GetMousePosition().x < 76 && GetMousePosition().y > 410 && GetMousePosition().y < 426 ){
             element = "iron";
-        if(GetMousePosition().x > 81 && GetMousePosition().x < 104 && GetMousePosition().y > 410 && GetMousePosition().y < 426 )
-            element = "Tierra";
+            type = "1";
+        }
+        if(GetMousePosition().x > 81 && GetMousePosition().x < 104 && GetMousePosition().y > 410 && GetMousePosition().y < 426 ){
+            element = "dirt";
+            type = "0";
+        }
     }
 
 
@@ -117,7 +121,6 @@ static void UpdateDrawFrame(void) {
 
     //Guardo la posicion actual del bloque para futura colisión
     player.setBack();
-
 
     EndMode2D();
     std::string x = std::to_string((int)player.getPos().x);
@@ -168,8 +171,8 @@ void renderInventario(){
 
     SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
     Vector2 position = {60, 410}; //posicion donde se dibujará el bloque
-    for(int i = 0; i < 3; i++){
-        DrawTextureRec(mapa.getTexture(), mapa.getRec(Bloques[i]), position, WHITE);
+    for(int Bloque : Bloques){
+        DrawTextureRec(mapa.getTexture(), mapa.getRec(Bloque), position, WHITE);
         DrawText("64",position.x+2,431,3,BLACK);
         position.x+=23;
     }

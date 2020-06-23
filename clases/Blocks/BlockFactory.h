@@ -17,7 +17,7 @@ class BlockFactory {
 public:
     BlockFactory() = default;
 
-    Block* create(std::string element, int type, Vector2 xCoordinates);
+    Block* create(std::string element, std::string type, Vector2 xCoordinates);
 };
 
 #endif //RAYLIBTEMPLATE_BLOCKFACTORY_H

@@ -11,24 +11,17 @@
 
 class Block {
 protected:
-    Color texture{};
     static Vector2 size;
     Rectangle cage;
     int Gid = 12;
 public:
-    explicit Block(Vector2 xCoordinates);
+    explicit Block(Vector2 xCoordinates, std::string type);
 
     ~Block();
-
-    virtual Vector2 getCoordinates();
 
     virtual  Rectangle getCage();
 
     static Vector2 getSize();
-
-    virtual Color getColor();
-
-    void setGid();
 
     int getGid();
 };
