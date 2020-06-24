@@ -13,8 +13,8 @@
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
 #endif
-const int screenWidth = 800;
-const int screenHeight = 450;
+const int screenWidth = 1280;
+const int screenHeight = 700;
 
 // Variables Globales
 Music music;
@@ -80,22 +80,23 @@ static void UpdateDrawFrame() {
         if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
         else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
 
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        if (!hash.exists(mousePosition))
-            hash.put(mousePosition, factory->create(element, "1", mousePosition));
-
-    //cambiar el tipo de bloque a crear según la posicion del mouse
-    if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
-        if(GetMousePosition().x > 60 && GetMousePosition().x < 76 && GetMousePosition().y > 410 && GetMousePosition().y < 426 ){
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+        //cambiar el tipo de bloque a crear según la posicion del mouse
+        if(GetMousePosition().x > 60 && GetMousePosition().x < 76 && GetMousePosition().y > screenHeight - 40 && GetMousePosition().y < screenHeight - 24 ){
             element = "iron";
             type = "1";
-        }
-        if(GetMousePosition().x > 81 && GetMousePosition().x < 104 && GetMousePosition().y > 410 && GetMousePosition().y < 426 ){
+        } else //cambiar el tipo de bloque a crear según la posicion del mouse
+        if(GetMousePosition().x > 81 && GetMousePosition().x < 104 && GetMousePosition().y > screenHeight - 40 && GetMousePosition().y < screenHeight - 24 ){
             element = "dirt";
             type = "0";
-        }
+        } else
+        if(GetMousePosition().x > 109 && GetMousePosition().x < 125 && GetMousePosition().y > screenHeight - 40 && GetMousePosition().y < screenHeight - 24 ){
+            element = "dirt";
+            type = "1";
+        } else
+        if (!hash.exists(mousePosition))
+            hash.put(mousePosition, factory->create(element, type, mousePosition));
     }
-
 
     if(IsKeyDown(KEY_SPACE))
         hash.remove(mousePosition);
@@ -163,17 +164,17 @@ void initializer() {
 }
 void renderInventario(){
 
-    DrawRectangleRec({50,400,700,45}, BROWN);
-    DrawRectangleRec({55,405,690,35}, LIGHTGRAY);
+    DrawRectangleRec({50,screenHeight - 50,screenWidth - 100,45}, BROWN); //outer
+    DrawRectangleRec({55,screenHeight - 45,screenWidth - 110,35}, LIGHTGRAY); //inner
 
     //load inventory data
-    int Bloques[3] = {12,461,640};
+    int Bloques[3] = {253,461,250};
 
-    SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
-    Vector2 position = {60, 410}; //posicion donde se dibujará el bloque
+    SingletonMapa &mapa = SingletonMapa::getInstance("");
+    Vector2 position = {60, screenHeight - 40}; //posicion donde se dibujará el bloque
     for(int Bloque : Bloques){
         DrawTextureRec(mapa.getTexture(), mapa.getRec(Bloque), position, WHITE);
-        DrawText("64",position.x+2,431,3,BLACK);
+        DrawText("64",position.x+2,screenHeight - 20,3,BLACK);
         position.x+=23;
     }
 }

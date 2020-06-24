@@ -14,10 +14,11 @@ SingletonMapa::SingletonMapa(const std::string file){
 
     tson::Tileson parser;
     //tson::Map map = parser.parse(fs::path("../resources/Mapa/EntitledMap1.json"));
-    map = parser.parse("../resources/Mapa/EntitledMap2.json");
+    map = parser.parse(file);
     if(map.getStatus() == tson::ParseStatus::OK) {
-        for (auto &tileset : map.getTilesets()){
+        for (auto &tileset : map.getTilesets()){ //std::string s = std::to_string(42);
             map_tex = LoadTexture("../resources/Mapa/totatilly-not-minecraft-textures.png");
+            std::cout << " \n holisssssss " << tileset.getImagePath() << " _----------\n";
             //map_tex = LoadTexture(fs::path("resources/Mapa/" + tileset.getImage().string()).c_str());
             map_tileset = &tileset;
         }

@@ -24,6 +24,7 @@ bool Hash::put(Vector2 key, Block *block) {
  * @return
  */
 bool Hash::remove(Vector2 key) {
+
     if (table.all().find(Vector2Adaptor(key)) != table.all().end()) {
         table.all()[Vector2Adaptor(key)]->~Block();
         table.all().erase(Vector2Adaptor(key));

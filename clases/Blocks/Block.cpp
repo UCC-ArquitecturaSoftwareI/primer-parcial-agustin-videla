@@ -11,7 +11,6 @@ Block::Block(Vector2 xCoordinates, std::string type) {
 }
 
 Block::~Block() {
-    std::cout << "me rompi ahre" << '\n';
 }
 
 Rectangle Block::getCage(){
