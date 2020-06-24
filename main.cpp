@@ -71,14 +71,14 @@ static void UpdateDrawFrame() {
         player.setPos(player.getBack());
     } else {
         if(!IsKeyDown(KEY_UP) && !botonazo.abajo)
-            player.cage.y += 1*player.getSpeed().y;
+            player.updatePosition(3);
     }
 
         // Verifico Entradas de eventos.
-        if (IsKeyDown(KEY_RIGHT)) player.cage.x += 1*player.getSpeed().x;
-        else if (IsKeyDown(KEY_LEFT)) player.cage.x -= 1*player.getSpeed().x;
-        if (IsKeyDown(KEY_UP)) player.cage.y -= 1*player.getSpeed().y;
-        else if (IsKeyDown(KEY_DOWN)) player.cage.y += 1*player.getSpeed().y;
+        if (IsKeyDown(KEY_RIGHT)) player.updatePosition(0);
+        else if (IsKeyDown(KEY_LEFT)) player.updatePosition(1);
+        if (IsKeyDown(KEY_UP)) player.updatePosition(2);
+        else if (IsKeyDown(KEY_DOWN)) player.updatePosition(3);
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
         //cambiar el tipo de bloque a crear según la posicion del mouse
@@ -96,10 +96,11 @@ static void UpdateDrawFrame() {
         } else
         if (!hash.exists(mousePosition))
             hash.put(mousePosition, factory->create(element, type, mousePosition));
+        else {
+            hash.remove(mousePosition);
+        }
     }
 
-    if(IsKeyDown(KEY_SPACE))
-        hash.remove(mousePosition);
 
     //La camara sigue al jugador
     camera.target = (Vector2){ player.getPos().x + player.cage.width/2, player.getPos().y + player.cage.height/2 };

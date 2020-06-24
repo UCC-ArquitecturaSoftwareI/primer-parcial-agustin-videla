@@ -6,6 +6,8 @@
 
 
 Player::Player() {
+    up = true;
+    right = true;
     cage.height = size.y;
     cage.width = size.x;
     speed = {1,1};
@@ -71,4 +73,21 @@ void Player::setSpeed(Vector2 v) {
 }
 
 
-
+void Player::updatePosition(int where) {
+    if(where == 0){ // right
+        cage.x += 1*speed.x;
+        right = true;
+    }
+    if(where == 1){ // left
+        cage.x -= 1*speed.x;
+        right = false;
+    }
+    if(where == 2){ // up
+        cage.y -= 1*speed.y;
+        up = true;
+    }
+    if(where == 3){ // down
+        cage.y += 1*speed.y;
+        up = false;
+    }
+}

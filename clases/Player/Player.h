@@ -13,8 +13,11 @@ class Player {
     static Vector2 size;
     Vector2 speed;
     Vector2 back;
+
 public:
     Rectangle cage { };
+    bool up;
+    bool right;
 
     static Player& getInstance();
 
@@ -31,6 +34,8 @@ public:
     void setBack();
 
     void setSpeed(Vector2 v);
+
+    void updatePosition(int where);
 };
 
 
