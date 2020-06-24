@@ -14,7 +14,7 @@ Player::Player() {
 /**
  * x = width, y = height
  */
-Vector2 Player::size = {Block::getSize().x, Block::getSize().y*2};
+Vector2 Player::size = {14, 16};
 
 /**
  * Devuelve una instancia única de player

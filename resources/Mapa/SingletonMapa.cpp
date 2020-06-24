@@ -2,7 +2,6 @@
 // Created by ribet on 25/5/2020.
 //
 #include "SingletonMapa.h"
-#include "../../clases/Vector2Functions/VectorTransform.h"
 
 /**
  * intialize all the data contained in the Json and load it into the correspondent place
@@ -13,12 +12,10 @@ SingletonMapa::SingletonMapa(const std::string file){
     Player &Player = Player::getInstance();
 
     tson::Tileson parser;
-    //tson::Map map = parser.parse(fs::path("../resources/Mapa/EntitledMap1.json"));
     map = parser.parse(file);
     if(map.getStatus() == tson::ParseStatus::OK) {
         for (auto &tileset : map.getTilesets()){ //std::string s = std::to_string(42);
             map_tex = LoadTexture("../resources/Mapa/totatilly-not-minecraft-textures.png");
-            std::cout << " \n holisssssss " << tileset.getImagePath() << " _----------\n";
             //map_tex = LoadTexture(fs::path("resources/Mapa/" + tileset.getImage().string()).c_str());
             map_tileset = &tileset;
         }

@@ -23,7 +23,7 @@ private:
     tson::Map map;
     Texture2D map_tex;
     tson::Tileset *map_tileset;
-    SingletonMapa(const std::string file);
+    SingletonMapa(std::string file);
     int getPos (int a, int b, char c);
 public:
     static SingletonMapa &getInstance(const std::string file);
