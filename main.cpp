@@ -2,14 +2,11 @@
 #include "clases/Blocks/BlockFactory.h"
 #include "clases/Renderer/BlockRenderer.h"
 #include "clases/Renderer/PlayerRenderer.h"
-#include "clases/Tools/ToolFactory.h"
 #include <vector>
 #include "clases/Vector2Functions/HashFacade.h"
 #include "clases/Collisions/CollisionObserver.h"
 #include "resources/Mapa/SingletonMapa.h"
-#include "clases/Vector2Functions/VectorTransform.h"
 #include "clases/state/playerState.h"
-
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
 #include <emscripten/emscripten.h>
