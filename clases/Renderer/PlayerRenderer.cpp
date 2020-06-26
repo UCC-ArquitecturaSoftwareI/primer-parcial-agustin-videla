@@ -9,6 +9,7 @@
  * @param player
  */
 void PlayerRenderer::render(Player *player) {
+    /*
     Texture2D tex;
     //tex = LoadTexture("../resources/caracteres/steve_right.png");
     Rectangle rec;
@@ -27,5 +28,6 @@ void PlayerRenderer::render(Player *player) {
     }
 
     DrawTextureRec(tex, rec , {player->cage.x, player->cage.y}, WHITE);
-    //DrawRectangleRec(player->cage, RED);
+     */
+    DrawRectangleRec(player->cage, RED);
 }

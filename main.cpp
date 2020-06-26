@@ -8,6 +8,7 @@
 #include "clases/Collisions/CollisionObserver.h"
 #include "resources/Mapa/SingletonMapa.h"
 #include "clases/Vector2Functions/VectorTransform.h"
+#include "clases/state/playerState.h"
 
 
 #if defined(PLATFORM_WEB) // Para crear HTML5
@@ -19,14 +20,13 @@ const int screenHeight = 700;
 // Variables Globales
 Music music;
 BlockFactory* factory;
-ToolFactory* toolFactory;
 BlockRenderer* blockRenderer;
 PlayerRenderer* playerRenderer;
 Player &player = Player::getInstance();
 Hash hash;
-std::vector<Tool*> tools;
 Camera2D camera;
 CollisionObserver botonazo;
+Context *context = new Context(new falling);
 //crear un inventario y meter esto ahí
 std::string element = "dirt"; //para crear bloques con el inventario
 std::string type = "0";
@@ -35,6 +35,7 @@ static void UpdateDrawFrame();          // Función dedicada a operar cada frame
 void renderInventario();
 
 int main() {
+
 
     initializer();
 
@@ -62,23 +63,31 @@ int main() {
  */
 static void UpdateDrawFrame() {
 
-    //UpdateMusicStream(music); //la saqué porque me cansó
-
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
     //checkeo colisiones
     if(botonazo.checkCollision()){
+        context->change();
         player.setPos(player.getBack());
-    } else {
-        if(!IsKeyDown(KEY_UP) && !botonazo.abajo)
-            player.updatePosition(3);
+    }
+    else {
+        if(!IsKeyDown(KEY_UP) && !botonazo.abajo && !botonazo.arriba){
+            context->down();
+            //player.updatePosition(3);
+        }
     }
 
-        // Verifico Entradas de eventos.
+/*        // Verifico Entradas de eventos.
         if (IsKeyDown(KEY_RIGHT)) player.updatePosition(0);
         else if (IsKeyDown(KEY_LEFT)) player.updatePosition(1);
         if (IsKeyDown(KEY_UP)) player.updatePosition(2);
         else if (IsKeyDown(KEY_DOWN)) player.updatePosition(3);
+*/
+    // Verifico Entradas de eventos.
+    if (IsKeyDown(KEY_RIGHT)) context->right();
+    else if (IsKeyDown(KEY_LEFT)) context->left();
+    if (IsKeyDown(KEY_UP)) context->up();
+    else if (IsKeyDown(KEY_DOWN)) context->down();
 
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
         //cambiar el tipo de bloque a crear según la posicion del mouse
@@ -152,11 +161,11 @@ void initializer() {
     PlayMusicStream(music);
     //fabricate everything we need
     factory = new BlockFactory;
-    toolFactory = new ToolFactory;
     player.cage.x = screenWidth/2;
     player.cage.y = screenHeight/2;
     //Load map data
     SingletonMapa &mapa = SingletonMapa::getInstance("../resources/Mapa/EntitledMap2.json");
+
     //camera init
     camera.target = (Vector2){ player.cage.x + player.cage.width/2, player.cage.y + player.cage.height/2 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };

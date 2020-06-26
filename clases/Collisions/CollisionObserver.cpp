@@ -16,7 +16,7 @@ bool CollisionObserver::checkCollision() {
     std::vector<int> colisiones;
     colides = false;
     abajo = false;
-
+    arriba = false;
     /*               0   1   2
      *               9  ***  3
      *               8  ***  4
@@ -35,6 +35,7 @@ bool CollisionObserver::checkCollision() {
     if(hash.exists(position)) {
         if (CheckCollisionRecs(player.cage, hash.get(position)->getCage())) {
             colides = true;
+            arriba = true;
         }
     }
     //arriba-derecha

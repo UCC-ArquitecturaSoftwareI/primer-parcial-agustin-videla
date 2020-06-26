@@ -4,13 +4,14 @@
 
 #include "Player.h"
 
-
 Player::Player() {
     up = true;
     right = true;
     cage.height = size.y;
     cage.width = size.x;
     speed = {1,1};
+    Gravity = 0;
+    falling = true;
 }
 
 /**
@@ -73,21 +74,40 @@ void Player::setSpeed(Vector2 v) {
 }
 
 
-void Player::updatePosition(int where) {
-    if(where == 0){ // right
+void Player::updatePosition(char where) {
+    if(where == 'r'){ // right
         cage.x += 1*speed.x;
         right = true;
     }
-    if(where == 1){ // left
+    if(where == 'l'){ // left
         cage.x -= 1*speed.x;
         right = false;
     }
-    if(where == 2){ // up
+    if(where == 'u'){ // up
         cage.y -= 1*speed.y;
         up = true;
     }
-    if(where == 3){ // down
+    if(where == 'd'){ // down
         cage.y += 1*speed.y;
         up = false;
     }
+}
+
+void Player::gravity() {
+    if(Gravity == 0 && falling)
+        Gravity++;
+    if (Gravity < 10 && falling)
+        Gravity++;
+    if(Gravity == 10 && !falling){
+        Gravity = 0;
+        falling = false;
+    }
+    if(Gravity%2 == 0)
+        cage.y += Gravity;
+    std::cout<<"gravedad : " << Gravity << "\n";
+}
+
+void Player::setGravity() {
+    Gravity = -100;
+    falling = true;
 }

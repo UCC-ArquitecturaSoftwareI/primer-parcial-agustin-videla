@@ -13,6 +13,8 @@ class Player {
     static Vector2 size;
     Vector2 speed;
     Vector2 back;
+    int Gravity;
+    bool falling;
 
 public:
     Rectangle cage { };
@@ -35,7 +37,11 @@ public:
 
     void setSpeed(Vector2 v);
 
-    void updatePosition(int where);
+    void updatePosition(char where);
+
+    void gravity();
+
+    void setGravity();
 };
 
 

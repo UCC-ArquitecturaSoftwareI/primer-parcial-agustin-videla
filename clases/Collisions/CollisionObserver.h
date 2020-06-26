@@ -18,6 +18,8 @@ public:
 
     bool abajo;
 
+    bool arriba;
+
     bool checkCollision();
 };
 
