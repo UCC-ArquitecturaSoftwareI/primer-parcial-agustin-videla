@@ -18,7 +18,6 @@ const int screenWidth = 1280;
 const int screenHeight = 700;
 
 // Variables Globales
-Music music;
 BlockFactory* factory;
 BlockRenderer* blockRenderer;
 PlayerRenderer* playerRenderer;
@@ -49,9 +48,6 @@ int main() {
     }
 #endif
 
-    // Descargar todos los resources cargados
-    UnloadMusicStream(music);   // Descargo la musica de RAM
-    CloseAudioDevice();         // Cierro el dispositivo de Audio
     CloseWindow();              // Cierro la ventana
     return 0;
 }
@@ -66,23 +62,12 @@ static void UpdateDrawFrame() {
     Vector2 mousePosition = mouseTransform(GetMousePosition()); //convierto la posición del mouse
 
     //checkeo colisiones
-    if(botonazo.checkCollision()){
-        context->change();
-        player.setPos(player.getBack());
-    }
-    else {
-        if(!IsKeyDown(KEY_UP) && !botonazo.abajo && !botonazo.arriba){
+    if(!botonazo.checkCollision()){
+        if(!IsKeyDown(KEY_UP)){
             context->down();
-            //player.updatePosition(3);
         }
     }
 
-/*        // Verifico Entradas de eventos.
-        if (IsKeyDown(KEY_RIGHT)) player.updatePosition(0);
-        else if (IsKeyDown(KEY_LEFT)) player.updatePosition(1);
-        if (IsKeyDown(KEY_UP)) player.updatePosition(2);
-        else if (IsKeyDown(KEY_DOWN)) player.updatePosition(3);
-*/
     // Verifico Entradas de eventos.
     if (IsKeyDown(KEY_RIGHT)) context->right();
     else if (IsKeyDown(KEY_LEFT)) context->left();
@@ -125,6 +110,7 @@ static void UpdateDrawFrame() {
         //check *-+/colision
         if(CheckCollisionRecs(i.second->getCage(), player.cage)){
             player.setPos(player.getBack());
+            context->change();
         }
     }
 
@@ -155,10 +141,6 @@ static void UpdateDrawFrame() {
 
 void initializer() {
     InitWindow(screenWidth, screenHeight, "Squarecraft");
-    //music init
-    InitAudioDevice();
-    music = LoadMusicStream("resources/Cyberpunk Moonlight Sonata.mp3");
-    PlayMusicStream(music);
     //fabricate everything we need
     factory = new BlockFactory;
     player.cage.x = screenWidth/2;

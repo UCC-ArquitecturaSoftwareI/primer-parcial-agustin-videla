@@ -13,7 +13,6 @@ class Player {
     static Vector2 size;
     Vector2 speed;
     Vector2 back;
-    int Gravity;
     bool falling;
 
 public:
@@ -29,19 +28,11 @@ public:
 
     Vector2 getBack();
 
-    Vector2 getSpeed();
-
     void setPos(Vector2 pos);
 
     void setBack();
 
-    void setSpeed(Vector2 v);
-
     void updatePosition(char where);
-
-    void gravity();
-
-    void setGravity();
 };
 
 

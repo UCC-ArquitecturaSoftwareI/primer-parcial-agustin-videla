@@ -10,7 +10,6 @@ Player::Player() {
     cage.height = size.y;
     cage.width = size.x;
     speed = {1,1};
-    Gravity = 0;
     falling = true;
 }
 
@@ -43,10 +42,6 @@ Vector2 Player::getSize() {
 Vector2 Player::getPos() {
     return {cage.x,cage.y};
 }
-
-Vector2 Player::getSpeed() {
-    return speed;
-}
 /**
  * Returns the previous position of player
  * @return
@@ -69,11 +64,6 @@ void Player::setBack() {
     back = getPos();
 }
 
-void Player::setSpeed(Vector2 v) {
-    speed = v;
-}
-
-
 void Player::updatePosition(char where) {
     if(where == 'r'){ // right
         cage.x += 1*speed.x;
@@ -91,23 +81,4 @@ void Player::updatePosition(char where) {
         cage.y += 1*speed.y;
         up = false;
     }
-}
-
-void Player::gravity() {
-    if(Gravity == 0 && falling)
-        Gravity++;
-    if (Gravity < 10 && falling)
-        Gravity++;
-    if(Gravity == 10 && !falling){
-        Gravity = 0;
-        falling = false;
-    }
-    if(Gravity%2 == 0)
-        cage.y += Gravity;
-    std::cout<<"gravedad : " << Gravity << "\n";
-}
-
-void Player::setGravity() {
-    Gravity = -100;
-    falling = true;
 }
