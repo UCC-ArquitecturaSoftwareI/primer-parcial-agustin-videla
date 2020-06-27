@@ -16,8 +16,7 @@ include("cmake/raylib.cmake")
 
 add_executable(SquareCraft main.cpp
         clases/Blocks/Block.h clases/Blocks/Block.cpp clases/Blocks/BlockFactory.h clases/Blocks/BlockFactory.cpp clases/Blocks/Block_Dirt.cpp
-        clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h clases/Tools/Tool.h clases/Tools/Tool_Pickaxe.h
-        clases/Tools/ToolFactory.h
+        clases/Blocks/Block_Iron.cpp clases/Blocks/Block_Iron.h 
         clases/Renderer/Renderer.h clases/Renderer/BlockRenderer.h clases/Renderer/BlockRenderer.cpp
 		clases/Renderer/PlayerRenderer.h clases/Renderer/PlayerRenderer.cpp
 		clases/Vector2Functions/Vector2Hash.h clases/Vector2Functions/HashFacade.cpp clases/Vector2Functions/SingletonHash.h
